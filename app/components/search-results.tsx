@@ -9,6 +9,7 @@ import LoadingAnimation from "./loading-animation"
 import LoadingSpinner from './loading-spinner'
 import { cleanContent } from '../utils/cleanContent'
 import NotFoundAnimation from "./not-found-animation"
+import { Switch } from '@/components/ui/switch'
 
 async function getSearchResults(query: string, page: number) {
   try {
@@ -51,6 +52,11 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
     setApiMessage(null)
     loadMore(true)
   }, [initialQuery, initialPage])
+
+  const [showContent, setShowContent] = useState(true);
+  const handleToggle = () => {
+    setShowContent(prev => !prev);
+  };
 
   useEffect(() => {
     if (inView && !noResults) {
@@ -100,10 +106,10 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
   if (noResults) {
     return (
       <div className="mt-8 text-center">
-        <p className="mb-4 font-base">没有找到匹配的结果</p>
-        
-          <NotFoundAnimation />
-        
+        <p className="mb-4 font-heading text-lg">没有找到匹配的结果</p>
+
+        <NotFoundAnimation />
+
         {apiMessage && (
           <p className="pt-12 text-sm text-gray-500 mt-2">{apiMessage}</p>
         )}
@@ -113,7 +119,16 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
 
   return (
     <div className="mt-8">
-      {results.length > 0 && <p className="mb-4 font-base">找到约 {totalHits} 条结果</p>}
+      <div className='flex justify-between'>
+        {results.length > 0 && <div className="mb-4 font-base">找到约 {totalHits} 条结果</div>}
+        <div>
+          <label className="mx-2" htmlFor="show-desc">显示内容</label>
+          <Switch id="show-desc"
+            checked={showContent}
+            onCheckedChange={handleToggle}
+          />
+        </div>
+      </div>
       {results.map((hit: any) => (
         <Card key={`${hit.id}-${hit.date}`} className="mb-4 overflow-hidden">
           <CardHeader>
@@ -129,11 +144,22 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
                 }}
               />
             </CardTitle>
-            <p className="text-sm mt-1 break-all overflow-hidden">
-              {hit.link}
-            </p>
+            <section className="text-sm mt-1 break-all overflow-hidden flex justify-between">
+              <div className="flex-1 truncate">{hit.link}</div>
+              <div className="flex items-center justify-end">
+                {hit.author && (
+                  <div className="mr-2">作者: {hit.author.slice(1).trim()}</div>
+                )}
+                <div>
+                  日期:
+                  <time dateTime={hit.date} suppressHydrationWarning>
+                    {new Date(hit.date * 1000).toLocaleDateString()}
+                  </time>
+                </div>
+              </div>
+            </section>
           </CardHeader>
-          <CardContent>
+          <CardContent className={showContent ? '' : 'hidden'}>
             <CardDescription
               dangerouslySetInnerHTML={{
                 __html: hit.content.replace(
@@ -143,20 +169,12 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
               }}
             />
           </CardContent>
-          <CardFooter>
-            <p className="text-sm">
-              {hit.author && hit.author.startsWith(';') && hit.author.slice(1).trim() && (
-                <>作者: {hit.author.slice(1).trim()} | </>
-              )}
-              日期: {new Date(hit.date * 1000).toLocaleDateString()}
-            </p>
-          </CardFooter>
         </Card>
       ))}
       {loading &&
-        
-          <LoadingAnimation />
-        
+
+        <LoadingAnimation />
+
       }
       {!noResults && <div ref={ref} className="h-10" />}
     </div>

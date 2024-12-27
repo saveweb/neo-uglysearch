@@ -46,6 +46,14 @@ module.exports = {
         base: '500',
         heading: '800',
       },
+      fontSize: {
+        'xs': '.8rem',       // 保持不变
+        'sm': '.9rem',      // 保持不变
+        'base': '1rem',       // 保持不变
+        'lg': '1.125rem',     // 保持不变
+        'xl': '1.5625rem',    // 1.25 * 1.25 = 1.5625
+        '2xl': '1.875rem',    // 1.5 * 1.25 = 1.875
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -74,4 +82,3 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 }
-
