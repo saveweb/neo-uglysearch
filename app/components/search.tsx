@@ -47,9 +47,9 @@ export default function Search() {
           placeholder="输入搜索关键词..."
           value={query}
           onChange={handleInputChange}
-          className="w-full"
+          className="w-full text-lg"
         />
-        <Button type="submit">搜索</Button>
+        <Button size="lg" type="submit">搜索</Button>
       </form>
       {debouncedQuery && <SearchResults initialQuery={debouncedQuery} initialPage={1} />}
     </div>
