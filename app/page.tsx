@@ -36,14 +36,15 @@ const marqueeItems = [
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-bg">
-      <div className="z-10 w-full items-center justify-between p-4 sm:p-8 md:p-16 lg:p-24">
+      <div className="my-8 w-full">
+        <Marquee items={marqueeItems} reverse />
+      </div>
+      <div className="z-10 w-full items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24">
         <h1 className="mb-4 font-black text-4xl font-heading text-text shadow-shadow text-center py-8">丑搜 v3</h1>
         <Suspense fallback={<LoadingSpinner />}>
           <Search />
         </Suspense>
-
         <SearchAnimation />
-
       </div>
       <div className="my-8 w-full">
         <Marquee items={marqueeItems} />

@@ -62,3 +62,10 @@ body {
   animation: marquee2 30s linear infinite;
 }
 
+.animate-marquee-rtl {
+  animation: marquee2 30s linear infinite reverse;
+}
+
+.animate-marquee2-rtl {
+  animation: marquee 30s linear infinite reverse;
+}
