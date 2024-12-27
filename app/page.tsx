@@ -27,10 +27,11 @@ const marqueeItems = [
   "Powered by Meilisearch",
   "简繁同搜",
   "RSS 订阅",
-  "不懂 CSS，前端处处是神话",
-  "历久弥新",
+  "收录 2k+ 博客",
   "个人网站",
+  "历久弥新",
   "Atom Feed",
+  "不懂 CSS，前端处处是神话",
   "互联网档案馆",
   "Designed by 前端之猫",
 ]
@@ -51,6 +52,7 @@ export default function Home() {
       <div className="my-8 w-full">
         <Marquee items={marqueeItems} />
       </div>
+      <p className="text-center text-sm text-text">Tips: 使用 <code>&author=你RSS的作者名&simple=1</code> 可作为站内搜索引擎使用</p>
     </main>
   )
 }

@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: '丑搜 v3',
-  description: '使用丑搜 v3搜索全球信息',
+  description: '中文独立博客全文搜索引擎（收录 2k+ 博客）',
 }
 
 export default function RootLayout({
