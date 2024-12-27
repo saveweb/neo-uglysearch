@@ -10,7 +10,12 @@ import debounce from 'lodash.debounce'
 export default function Search() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const initialQuery = searchParams.get('q') || ''
+  let initialQuery = searchParams.get('q') || ''
+  const authorQuery = searchParams.get('author') || ''
+  let simple = !!(searchParams.get('simple') || '')
+  if (authorQuery) {
+    initialQuery = `;${authorQuery} ${initialQuery}`
+  }
   const [query, setQuery] = useState(initialQuery)
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery)
 
@@ -41,7 +46,7 @@ export default function Search() {
 
   return (
     <div>
-      <form onSubmit={handleSearch} className="flex w-full max-w-sm items-center space-x-2 mx-auto">
+      <form onSubmit={handleSearch} className={"flex w-full max-w-sm items-center space-x-2 mx-auto" + (simple ? " hidden" : "")}>
         <Input
           type="text"
           placeholder="输入搜索关键词..."

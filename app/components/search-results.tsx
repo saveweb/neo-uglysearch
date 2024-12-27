@@ -148,7 +148,7 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
               <div className="flex-1 truncate">{hit.link}</div>
               <div className="flex items-center justify-end">
                 {hit.author && (
-                  <div className="mr-2">作者: {hit.author.slice(1).trim()}</div>
+                  <div className="mr-2">作者: <span dangerouslySetInnerHTML={{ __html: hit.author.replace(/text-purple-500/g, "text-rose-500	").slice(1).trim() }}></span></div>
                 )}
                 <div>
                   日期:
