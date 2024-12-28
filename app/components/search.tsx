@@ -10,43 +10,49 @@ import debounce from 'lodash.debounce'
 export default function Search() {
   const router = useRouter()
   const searchParams = useSearchParams()
+
   let initialQuery = searchParams.get('q') || ''
   const authorQuery = searchParams.get('author') || ''
   let simple = !!(searchParams.get('simple') || '')
+
   if (authorQuery) {
     initialQuery = `;${authorQuery} ${initialQuery}`
   }
-  const [query, setQuery] = useState(initialQuery)
-  const [debouncedQuery, setDebouncedQuery] = useState(initialQuery)
 
-  const debouncedSetQuery = useCallback(
+  const [query, setQuery] = useState(initialQuery)
+
+  const debouncedUpdateURL = useCallback(
     debounce((value: string) => {
-      setDebouncedQuery(value)
       router.push(`/search?q=${encodeURIComponent(value)}`, { scroll: false })
     }, 300),
     []
   )
 
+  // 清理 debounce
   useEffect(() => {
     return () => {
-      debouncedSetQuery.cancel()
+      debouncedUpdateURL.cancel()
     }
-  }, [debouncedSetQuery])
+  }, [debouncedUpdateURL])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    router.push(`/search?q=${encodeURIComponent(query)}`)
+    const encodedQuery = encodeURIComponent(query)
+    router.push(`/search?q=${encodedQuery}`, { scroll: false })
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setQuery(value)
-    debouncedSetQuery(value)
+    debouncedUpdateURL(value)
   }
 
   return (
     <div>
-      <form onSubmit={handleSearch} className={"flex w-full max-w-sm items-center space-x-2 mx-auto" + (simple ? " hidden" : "")}>
+      <form
+        onSubmit={handleSearch}
+        className={`flex w-full max-w-sm items-center space-x-2 mx-auto${simple ? " hidden" : ""}`}
+      >
         <Input
           type="text"
           placeholder="输入搜索关键词..."
@@ -56,8 +62,14 @@ export default function Search() {
         />
         <Button size="lg" type="submit">搜索</Button>
       </form>
-      {debouncedQuery && <SearchResults initialQuery={debouncedQuery} initialPage={0} />}
+
+      {query && (
+        <SearchResults
+          key={query} // 添加 key 属性确保查询变化时重新渲染
+          initialQuery={query} // 改用 query 替代 initialQuery
+          initialPage={0}
+        />
+      )}
     </div>
   )
 }
-
