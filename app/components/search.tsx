@@ -56,7 +56,7 @@ export default function Search() {
         />
         <Button size="lg" type="submit">搜索</Button>
       </form>
-      {debouncedQuery && <SearchResults initialQuery={debouncedQuery} initialPage={1} />}
+      {debouncedQuery && <SearchResults initialQuery={debouncedQuery} initialPage={0} />}
     </div>
   )
 }

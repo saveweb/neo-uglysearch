@@ -12,8 +12,17 @@ import NotFoundAnimation from "./not-found-animation"
 import { Switch } from '@/components/ui/switch'
 
 async function getSearchResults(query: string, page: number) {
+  const baseUrl = 'https://search-api.saveweb.org/api/search';
+  const url = new URL(baseUrl);
+  const params = new URLSearchParams({
+      q: query,
+      f: 'false',
+      p: page.toString(),
+      h: 'true'
+  });
+  url.search = params.toString();
   try {
-    const res = await fetch(`https://search-api.saveweb.org/api/search?q=${encodeURIComponent(query)}&f=false&p=${page}&h=true`, {
+    const res = await fetch(url, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
