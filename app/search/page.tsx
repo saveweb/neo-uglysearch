@@ -6,7 +6,10 @@ export default function SearchPage() {
   return (
     <main className="flex min-h-screen flex-col items-center sm:px-2 md:px-4 sm:px-8 md:px-16 lg:px-24 bg-bg">
       <div className="w-full max-w-5xl">
-        <h1 className="mt-8 mb-4 font-black text-4xl font-heading text-text shadow-shadow"><a href="/">丑搜 v3</a></h1>
+        <h1 className="mt-8 mb-4 font-black text-4xl font-heading text-text shadow-shadow relative">
+          <img src="/neosearch.svg" alt="NeoSearch" className="w-24 h-24 inline-block mr-2 absolute move-lr" />
+          <a href="/">丑搜 v3</a>
+        </h1>
         <Suspense fallback={<LoadingSpinner />}>
           <Search />
         </Suspense>

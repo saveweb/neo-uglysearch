@@ -130,7 +130,9 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
   return (
     <div className="mt-8">
       <div className='flex justify-between'>
-        {results.length > 0 && <div className="mb-4 font-base">找到约 {totalHits} 条结果</div>}
+        <div className="mb-4 font-base">
+        {results.length > 0 ? `找到约 ${totalHits} 条结果` : '正在查询'}
+        </div>
         <div>
           <label className="mx-2" htmlFor="show-desc">显示内容</label>
           <Switch id="show-desc"

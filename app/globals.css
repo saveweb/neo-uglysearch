@@ -70,3 +70,23 @@ body {
 .animate-marquee2-rtl {
   animation: marquee 30s linear infinite reverse;
 }
+
+@keyframes moveLeftRight {
+  0% {
+    left: -5%;
+    transform: rotate(-35deg);
+  }
+  50% {
+    left: calc(20% - 96px); /* 100% - 图片宽度(24px) */
+    transform: rotate(12deg);
+  }
+  100% {
+    left: -5%;
+    transform: rotate(-35deg);
+  }
+}
+.move-lr {
+  position: absolute;
+  animation: moveLeftRight 10s infinite ease-in-out;
+  pointer-events: none;
+}

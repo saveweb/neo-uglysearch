@@ -31,7 +31,7 @@ const marqueeItems = [
   "个人网站",
   "历久弥新",
   "Atom Feed",
-  "不懂 CSS，前端处处是神话",
+  "前端处处是神话",
   "互联网档案馆",
   "Designed by 前端之猫",
 ]
@@ -43,7 +43,10 @@ export default function Home() {
         <Marquee items={marqueeItems} reverse />
       </div>
       <div className="z-10 w-full items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24">
-        <h1 className="mb-4 font-black text-4xl font-heading text-text shadow-shadow text-center py-8">丑搜 v3</h1>
+        <h1 className="mb-4 font-black text-4xl font-heading text-text shadow-shadow text-center py-8">
+          <img src="/neosearch.svg" alt="NeoSearch" className="w-24 h-24 inline-block mr-2 absolute translate-x-32" />
+          丑搜 v3
+        </h1>
         <Suspense fallback={<LoadingSpinner />}>
           <Search />
         </Suspense>
