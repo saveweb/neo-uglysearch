@@ -10,15 +10,16 @@ import LoadingSpinner from './loading-spinner'
 import { cleanContent } from '../utils/cleanContent'
 import NotFoundAnimation from "./not-found-animation"
 import { Switch } from '@/components/ui/switch'
+import NoMoreAnimation from './no-more-animation'
 
 async function getSearchResults(query: string, page: number) {
   const baseUrl = 'https://search-api.saveweb.org/api/search';
   const url = new URL(baseUrl);
   const params = new URLSearchParams({
-      q: query,
-      f: 'false',
-      p: page.toString(),
-      h: 'true'
+    q: query,
+    f: 'false',
+    p: page.toString(),
+    h: 'true'
   });
   url.search = params.toString();
   try {
@@ -78,11 +79,11 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
     setLoading(true)
     try {
       const data = await getSearchResults(query, reset ? initialPage : page)
+      setTotalHits(totalHits + (data?.hits?.length ?? 0))
       if (data.error) {
         setError(data.error)
       } else if (data.hits.length === 0) {
         setNoResults(true)
-        setTotalHits(0)
         if (data['humans.txt']) {
           setApiMessage(data['humans.txt'])
         }
@@ -112,9 +113,9 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
     )
   }
 
-  if (noResults) {
+  if (noResults && (totalHits === 0)) {
     return (
-      <div className="mt-8 text-center">
+      <div className="mt-8 mb-12 text-center">
         <p className="mb-4 font-heading text-lg">没有找到匹配的结果</p>
 
         <NotFoundAnimation />
@@ -181,11 +182,15 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
         </Card>
       ))}
       {loading &&
-
         <LoadingAnimation />
-
       }
       {!noResults && <div ref={ref} className="h-10" />}
+      {noResults && totalHits > 0 && (
+        <div className="mt-8 mb-12 text-center">
+          <p className="font-heading text-lg">没有更多结果了</p>
+          <NoMoreAnimation />
+        </div>
+      )}
     </div>
   )
 }
