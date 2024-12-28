@@ -17,6 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh">
+      <head>
+        <meta name="theme-color" content="#FE9F61" />
+      </head>
       <body className={inter.className}>
         <ViewTransitions>
           {children}

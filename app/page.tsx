@@ -52,7 +52,7 @@ export default function Home() {
       <div className="my-8 w-full">
         <Marquee items={marqueeItems} />
       </div>
-      <p className="text-center text-sm text-text">Tips: 使用 <code>&author=你RSS的作者名&simple=1</code> 可作为站内搜索引擎使用</p>
+      <p className="text-center text-sm text-text mb-4">Tips: 使用 <code>&author=你RSS的作者名&simple=1</code> 可作为站内搜索引擎使用</p>
     </main>
   )
 }
