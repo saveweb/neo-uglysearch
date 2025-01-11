@@ -11,8 +11,9 @@ import { cleanContent } from '../utils/cleanContent'
 import NotFoundAnimation from "./not-found-animation"
 import { Switch } from '@/components/ui/switch'
 import NoMoreAnimation from './no-more-animation'
+import { Sort } from './search-box'
 
-async function getSearchResults(query: string, page: number) {
+async function getSearchResults(query: string, page: number, sort: Sort) {
   const baseUrl = 'https://search-api.saveweb.org/api/search';
   const url = new URL(baseUrl);
   const params = new URLSearchParams({
@@ -21,6 +22,9 @@ async function getSearchResults(query: string, page: number) {
     p: page.toString(),
     h: 'true'
   });
+  if (sort !== Sort.Relevance) {
+    params.append('sort', sort)
+  }
   url.search = params.toString();
   try {
     const res = await fetch(url, {
@@ -39,7 +43,7 @@ async function getSearchResults(query: string, page: number) {
   }
 }
 
-export default function SearchResults({ initialQuery, initialPage }: { initialQuery: string, initialPage: number }) {
+export default function SearchResults({ initialQuery, initialPage, sort }: { initialQuery: string, initialPage: number, sort: Sort }) {
   const [query, setQuery] = useState(initialQuery)
   const [page, setPage] = useState(initialPage)
   const [results, setResults] = useState<any[]>([])
@@ -78,7 +82,7 @@ export default function SearchResults({ initialQuery, initialPage }: { initialQu
     if (loading) return
     setLoading(true)
     try {
-      const data = await getSearchResults(query, reset ? initialPage : page)
+      const data = await getSearchResults(query, reset ? initialPage : page, sort)
       setTotalHits(totalHits + (data?.hits?.length ?? 0))
       if (data.error) {
         setError(data.error)

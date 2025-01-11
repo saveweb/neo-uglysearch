@@ -1,75 +1,90 @@
-'use client'
+"use client";
 
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import SearchResults from './search-results'
-import debounce from 'lodash.debounce'
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import SearchResults from "./search-results";
+import debounce from "lodash.debounce";
+import SearchBox, { Sort } from "./search-box";
 
 export default function Search() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  let initialQuery = searchParams.get('q') || ''
-  const authorQuery = searchParams.get('author') || ''
-  let simple = !!(searchParams.get('simple') || '')
+  let initialQuery = searchParams.get("q") || "";
+  const authorQuery = searchParams.get("author") || "";
+  let simple = !!(searchParams.get("simple") || "");
 
   if (authorQuery) {
-    initialQuery = `;${authorQuery} ${initialQuery}`
+    initialQuery = `;${authorQuery} ${initialQuery}`;
   }
 
-  const [query, setQuery] = useState(initialQuery)
+  let initSort = searchParams.get("sort");
+  if (!initSort) initSort = "relevance";
+  let [sort, setSort] = useState<Sort>(initSort as Sort);
+
+  const [query, setQuery] = useState(initialQuery);
 
   const debouncedUpdateURL = useCallback(
     debounce((value: string) => {
-      router.push(`/search?q=${encodeURIComponent(value)}`, { scroll: false })
+      let h = `/search?q=${encodeURIComponent(value)}`;
+      if (sort !== "relevance") {
+        h += `&sort=${sort}`;
+      }
+      router.push(h, { scroll: false });
     }, 300),
-    []
-  )
+    [sort]
+  );
 
   // 清理 debounce
   useEffect(() => {
     return () => {
-      debouncedUpdateURL.cancel()
-    }
-  }, [debouncedUpdateURL])
+      debouncedUpdateURL.cancel();
+    };
+  }, [debouncedUpdateURL]);
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    const encodedQuery = encodeURIComponent(query)
-    router.push(`/search?q=${encodedQuery}`, { scroll: false })
-  }
+    e.preventDefault();
+    const encodedQuery = encodeURIComponent(query);
+    router.push(`/search?q=${encodedQuery}&sort=${sort}`, { scroll: false });
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setQuery(value)
-    debouncedUpdateURL(value)
-  }
+  const handleInputChange = (s: string) => {
+    setQuery(s);
+    debouncedUpdateURL(s);
+  };
+
+  useEffect(() => {
+    if (query) {
+      router.push(`/search?q=${encodeURIComponent(query)}&sort=${sort}`, {
+        scroll: false,
+      });
+    }
+  }, [sort]);
 
   return (
     <div>
       <form
         onSubmit={handleSearch}
-        className={`flex w-full max-w-sm items-center space-x-2 mx-auto${simple ? " hidden" : ""}`}
+        className={`flex w-full items-center space-x-2 mx-auto${
+          simple ? " hidden" : ""
+        }`}
       >
-        <Input
-          type="text"
-          placeholder="输入搜索关键词..."
-          value={query}
+        <SearchBox
+          query={query}
           onChange={handleInputChange}
-          className="w-full text-lg"
+          onSortChange={setSort}
         />
-        <Button size="lg" type="submit">搜索</Button>
       </form>
 
       {query && (
         <SearchResults
-          key={query} // 添加 key 属性确保查询变化时重新渲染
+          key={`${query}-${sort}`} // 添加 key 属性确保查询变化时重新渲染
           initialQuery={query} // 改用 query 替代 initialQuery
           initialPage={0}
+          sort={sort}
         />
       )}
     </div>
-  )
+  );
 }
