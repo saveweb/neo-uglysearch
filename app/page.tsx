@@ -47,9 +47,11 @@ export default function Home() {
           <img src="/neosearch.svg" alt="NeoSearch" className="w-24 h-24 inline-block mr-2 absolute translate-x-32" />
           丑搜 v3
         </h1>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Search />
-        </Suspense>
+        <section className='max-w-4xl w-full m-auto'>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Search />
+          </Suspense>
+        </section>
         <SearchAnimation />
       </div>
       <div className="my-8 w-full">
