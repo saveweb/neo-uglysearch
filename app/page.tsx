@@ -1,8 +1,8 @@
-import { Suspense } from 'react'
-import Search from './components/search'
-import Marquee from './components/marquee'
-import LoadingSpinner from './components/loading-spinner'
-import SearchAnimation from './components/search-animation'
+import { Suspense } from "react";
+import Search from "./components/search";
+import Marquee from "./components/marquee";
+import LoadingSpinner from "./components/loading-spinner";
+import SearchAnimation from "./components/search-animation";
 
 /*
 全文搜索，模糊搜索，简繁同搜，拼音，同音字。
@@ -34,7 +34,7 @@ const marqueeItems = [
   "前端处处是神话",
   "互联网档案馆",
   "Designed by 前端之猫",
-]
+];
 
 export default function Home() {
   return (
@@ -44,10 +44,14 @@ export default function Home() {
       </div>
       <div className="z-10 w-full items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24">
         <h1 className="mb-4 font-black text-4xl font-heading text-text shadow-shadow text-center py-8">
-          <img src="/neosearch.svg" alt="NeoSearch" className="w-24 h-24 inline-block mr-2 absolute translate-x-32" />
+          <img
+            src="/neosearch.svg"
+            alt="NeoSearch"
+            className="w-24 h-24 inline-block mr-2 absolute translate-x-32"
+          />
           丑搜 v3
         </h1>
-        <section className='max-w-4xl w-full m-auto'>
+        <section className="max-w-4xl w-full m-auto">
           <Suspense fallback={<LoadingSpinner />}>
             <Search />
           </Suspense>
@@ -57,8 +61,18 @@ export default function Home() {
       <div className="my-8 w-full">
         <Marquee items={marqueeItems} />
       </div>
-      <p className="text-center text-sm text-text mb-4">Tips: 使用 <code>&author=你RSS的作者名&simple=1</code> 可作为站内搜索引擎使用</p>
+      <p className="text-center text-sm text-text mb-4">
+        Save the Web Project © 2025.
+        <br />
+        Open sourced at{" "}
+        <a
+          href="https://github.com/saveweb/neo-uglysearch"
+          className="text-primary underline"
+        >
+          GitHub
+        </a>{" "}
+        via MIT License.
+      </p>
     </main>
-  )
+  );
 }
-

@@ -17,7 +17,7 @@ async function getSearchResults(query: string, page: number, sort: Sort) {
   const baseUrl = 'https://search-api.saveweb.org/api/search';
   const url = new URL(baseUrl);
   const params = new URLSearchParams({
-    q: query,
+    q: query.trim(),
     f: 'false',
     p: page.toString(),
     h: 'true'
