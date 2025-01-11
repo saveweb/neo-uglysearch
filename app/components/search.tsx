@@ -11,15 +11,15 @@ export default function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  let initialQuery = searchParams.get("q") || "";
-  const authorQuery = searchParams.get("author") || "";
+  let initialQuery = decodeURIComponent(searchParams.get("q") || "");
+  const authorQuery = decodeURIComponent(searchParams.get("author") || "");
   let simple = !!(searchParams.get("simple") || "");
 
   if (authorQuery) {
     initialQuery = `;${authorQuery} ${initialQuery}`;
   }
 
-  let initSort = searchParams.get("sort");
+  let initSort = decodeURIComponent(searchParams.get("sort") || "relevance");
   if (!initSort) initSort = "relevance";
   let [sort, setSort] = useState<Sort>(initSort as Sort);
 
@@ -35,6 +35,10 @@ export default function Search() {
     }, 300),
     [sort]
   );
+
+  function isAdvancedSearch(query: string) {
+    return query.includes("(") && query.endsWith(")");
+  }
 
   // 清理 debounce
   useEffect(() => {
@@ -72,6 +76,7 @@ export default function Search() {
       >
         <SearchBox
           query={query}
+          initAdvancedSearch={isAdvancedSearch(query)}
           onChange={handleInputChange}
           onSortChange={setSort}
         />

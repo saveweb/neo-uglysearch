@@ -3,7 +3,7 @@
 import BasicSearchBox from "./basic-search-box";
 import AdvancedSearchInput from "./advanced-search-box";
 import { Switch } from "@/components/ui/switch";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -13,20 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Label } from "@radix-ui/react-select";
+import ManualDialog from "./manual-dialog";
 
 export interface Props {
   query: string;
+  initAdvancedSearch: boolean;
   onChange: (s: string) => void;
   onSortChange: (sort: Sort) => void;
 }
@@ -41,7 +32,7 @@ export enum Sort {
 
 export default function Search(props: Props) {
   const [query, setQuery] = React.useState(props.query);
-  const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(false);
+  const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(props.initAdvancedSearch);
   const [sort, setSort] = React.useState<Sort>(Sort.Relevance);
   useEffect(() => {
     props.onSortChange(sort);
@@ -49,22 +40,10 @@ export default function Search(props: Props) {
 
   return (
     <div className="w-full">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button>使用说明</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when youre done.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
       <div className="flex flex-row items-center justify-end mb-2">
+        <div className="mr-auto">
+          <ManualDialog />
+        </div>
         <label className="mx-2" htmlFor="use-advanced">
           高级搜索
         </label>
