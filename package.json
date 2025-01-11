@@ -15,6 +15,7 @@
   "dependencies": {
     "@codemirror/lang-sql": "^6.8.0",
     "@mantine/core": "^7.15.2",
+    "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-select": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.2",
