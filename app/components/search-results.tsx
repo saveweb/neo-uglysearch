@@ -156,7 +156,7 @@ export default function SearchResults({
   return (
     <div className="mt-8">
       <div className="flex justify-between">
-        <div className="mb-4 font-base">
+        <div className="mb-4 font-base font-medium">
           {results.length > 0 ? `找到约 ${totalHits} 条结果` : "正在查询"}
         </div>
         <div>
@@ -176,11 +176,11 @@ export default function SearchResults({
             <CardTitle>
               <Link
                 href={hit.link}
-                className="no-underline hover:underline"
+                className="no-underline hover:underline leading-8	font-base font-bold"
                 dangerouslySetInnerHTML={{
                   __html: hit.title.replace(
                     /<span class="uglyHighlight text-purple-500">/g,
-                    '<span style="background-color: #E4B7A0;">'
+                    '<span class="uglyHighlight">'
                   ),
                 }}
               />
@@ -218,7 +218,7 @@ export default function SearchResults({
                 __html: hit.content /* .replace(/</g, "&lt;") */
                   .replace(
                     /<span class="uglyHighlight text-purple-500">/g,
-                    '<span style="background-color: #E4B7A0;">'
+                    '<span class="uglyHighlight">'
                   ),
               }}
             />

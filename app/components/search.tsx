@@ -16,7 +16,7 @@ export default function Search() {
   let simple = !!(searchParams.get("simple") || "");
 
   if (authorQuery) {
-    initialQuery = `;${authorQuery} ${initialQuery}`;
+    initialQuery += ` (author=${authorQuery})`;
   }
 
   let initSort = decodeURIComponent(searchParams.get("sort") || "relevance");

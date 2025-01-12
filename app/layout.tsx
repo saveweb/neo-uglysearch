@@ -1,9 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { ViewTransitions } from 'next-view-transitions';
 
-const inter = Inter({ subsets: ['latin'] })
+// import "@ibm/plex-sans-sc/css/ibm-plex-sans-sc-all.min.css";
 
 export const metadata: Metadata = {
   title: "丑搜 v3",
@@ -26,7 +25,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#c24812" />
       </head>
-      <body className={inter.className}>
+      <body>
         <ViewTransitions>
           {children}
         </ViewTransitions>
@@ -34,4 +33,3 @@ export default function RootLayout({
     </html>
   )
 }
-

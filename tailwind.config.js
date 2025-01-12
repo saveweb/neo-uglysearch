@@ -55,7 +55,8 @@ module.exports = {
         '2xl': '1.875rem',    // 1.5 * 1.25 = 1.875
       },
       fontFamily: {
-        "mono": ["JetBrains Mono", "IBM Plex Mono", "Mononoki", "Fira Code", "monospace"],
+        "base": ["IBM Plex", "IBM Plex Sans SC", "Noto Sans CJK SC", "sans-serif"],
+        "mono": ["IBM Plex Mono", "JetBrains Mono", "Mononoki", "Fira Code", "monospace"],
       },
       keyframes: {
         "accordion-down": {

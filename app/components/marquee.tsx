@@ -4,7 +4,7 @@ export default function Marquee({ items, reverse = false }: { items: string[], r
   const animationClass2 = reverse ? 'animate-marquee2-rtl' : 'animate-marquee2';
 
   return (
-    <div className="relative flex w-full overflow-x-hidden border-b-2 border-t-2 border-border bg-bw text-text font-base">
+    <div className="relative flex w-full overflow-x-hidden border-b-2 border-t-2 border-border bg-bw text-text font-semibold">
       <div className={`${animationClass} whitespace-nowrap py-8 flex`}>
         {items.map((item) => (
           <span key={item} className="mx-4 text-3xl flex-shrink-0">

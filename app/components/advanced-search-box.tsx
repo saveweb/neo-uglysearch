@@ -13,13 +13,13 @@ export interface Props {
 export default function AdvancedSearchInput(props: Props) {
   /*
   title: str, 文章标题
-id: int, 文章被抓取入库的实际时间，以微秒计 (1/1,000,000)，UTC 时间
-id_feed: int, 文章所属的 feed ID
-author: list[str], 文章作者（注意是列表）
-tags: list[str], 文章标签（注意是列表）
-date: int, feed 自行声明的文章发布时间，以秒计，UTC 时间（注意时间直接取自 feed，可能不准确）
-content: str, 文章内容（markdown）
-link: str, 文章链接
+  id: int, 文章被抓取入库的实际时间，以微秒计 (1/1,000,000)，UTC 时间
+  id_feed: int, 文章所属的 feed ID
+  author: list[str], 文章作者（注意是列表）
+  tags: list[str], 文章标签（注意是列表）
+  date: int, feed 自行声明的文章发布时间，以秒计，UTC 时间（注意时间直接取自 feed，可能不准确）
+  content: str, 文章内容（markdown）
+  link: str, 文章链接
   */
   const TABLES = [
     "id",

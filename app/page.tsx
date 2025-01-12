@@ -49,7 +49,7 @@ export default function Home() {
           <img
             src="/neosearch.svg"
             alt="NeoSearch"
-            className="w-24 h-24 inline-block mr-2 absolute translate-x-32"
+            className="w-24 h-24 inline-block mr-2 absolute translate-x-32 font-bold"
           />
           丑搜 v3
           <div className="ml-auto block md:hidden">
@@ -72,9 +72,9 @@ export default function Home() {
         [AD] 正在进行中的项目：
         <a href="https://github.com/saveweb/review-2024">2024 年年终总结收集</a>
         <br />
-        <a href="https://saveweb.org">Save the Web Project</a> © 2025.
+        neo-uglysearch@0.3.0 by <a href="https://saveweb.org">Save the Web Project</a> © 2025.
         <br />
-        Open sourced at{" "}
+        Hosted on Vercel & Open sourced at{" "}
         <a
           href="https://github.com/saveweb/neo-uglysearch"
           className="text-primary"

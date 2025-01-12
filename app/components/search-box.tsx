@@ -39,7 +39,7 @@ export default function Search(props: Props) {
   }, [sort]);
 
   return (
-    <div className="w-full">
+    <div className="w-full font-semibold">
       <div className="flex flex-row items-center justify-end mb-2">
         <div className="mr-auto hidden md:block">
           <ManualDialog />
