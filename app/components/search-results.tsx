@@ -1,111 +1,134 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Link } from 'next-view-transitions'
-import { useInView } from 'react-intersection-observer'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import LoadingAnimation from "./loading-animation"
-import { cleanContent } from '../utils/cleanContent'
-import NotFoundAnimation from "./not-found-animation"
-import { Switch } from '@/components/ui/switch'
-import NoMoreAnimation from './no-more-animation'
-import { Sort } from './search-box'
+import { useState, useEffect } from "react";
+import { Link } from "next-view-transitions";
+import { useInView } from "react-intersection-observer";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import LoadingAnimation from "./loading-animation";
+import { cleanContent } from "../utils/cleanContent";
+import NotFoundAnimation from "./not-found-animation";
+import { Switch } from "@/components/ui/switch";
+import NoMoreAnimation from "./no-more-animation";
+import { Sort } from "./search-box";
 
 async function getSearchResults(query: string, page: number, sort: Sort) {
-  const baseUrl = 'https://search-api.saveweb.org/api/search';
+  const baseUrl = "https://search-api.saveweb.org/api/search";
   const url = new URL(baseUrl);
   const params = new URLSearchParams({
-    q: query.trim(),
-    f: 'false',
+    q: encodeURIComponent(query.trim()),
+    f: "false",
     p: page.toString(),
-    h: 'true'
+    h: "true",
   });
   if (sort !== Sort.Relevance) {
-    params.append('sort', sort)
+    params.append("sort", sort);
   }
   url.search = params.toString();
   try {
     const res = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
       },
-    })
+    });
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`)
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
-    return await res.json()
+    return await res.json();
   } catch (error) {
-    console.error('Fetch error:', error)
-    throw new Error('Failed to fetch data. Please try again later.')
+    console.error("Fetch error:", error);
+    throw new Error("Failed to fetch data. Please try again later.");
   }
 }
 
-export default function SearchResults({ initialQuery, initialPage, sort }: { initialQuery: string, initialPage: number, sort: Sort }) {
-  const [query, setQuery] = useState(initialQuery)
-  const [page, setPage] = useState(initialPage)
-  const [results, setResults] = useState<any[]>([])
-  const [totalHits, setTotalHits] = useState(0)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [noResults, setNoResults] = useState(false)
-  const [apiMessage, setApiMessage] = useState<string | null>(null)
+export default function SearchResults({
+  initialQuery,
+  initialPage,
+  sort,
+}: {
+  initialQuery: string;
+  initialPage: number;
+  sort: Sort;
+}) {
+  const [query, setQuery] = useState(initialQuery);
+  const [page, setPage] = useState(initialPage);
+  const [results, setResults] = useState<any[]>([]);
+  const [totalHits, setTotalHits] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [noResults, setNoResults] = useState(false);
+  const [apiMessage, setApiMessage] = useState<string | null>(null);
 
   const { ref, inView } = useInView({
     threshold: 0,
-  })
+  });
 
   useEffect(() => {
-    setResults([])
-    setPage(initialPage)
-    setQuery(initialQuery)
-    setError(null)
-    setNoResults(false)
-    setApiMessage(null)
-    loadMore(true)
-  }, [initialQuery, initialPage])
+    setResults([]);
+    setPage(initialPage);
+    setQuery(initialQuery);
+    setError(null);
+    setNoResults(false);
+    setApiMessage(null);
+    loadMore(true);
+  }, [initialQuery, initialPage]);
 
   const [showContent, setShowContent] = useState(true);
   const handleToggle = () => {
-    setShowContent(prev => !prev);
+    setShowContent((prev) => !prev);
   };
 
   useEffect(() => {
     if (inView && !noResults) {
-      loadMore()
+      loadMore();
     }
-  }, [inView])
+  }, [inView]);
 
   const loadMore = async (reset = false) => {
-    if (loading) return
-    setLoading(true)
+    if (loading) return;
+    setLoading(true);
     try {
-      const data = await getSearchResults(query, reset ? initialPage : page, sort)
-      setTotalHits(totalHits + (data?.hits?.length ?? 0))
+      const data = await getSearchResults(
+        query,
+        reset ? initialPage : page,
+        sort
+      );
+      setTotalHits(totalHits + (data?.hits?.length ?? 0));
       if (data.error) {
-        setError(data.error)
+        setError(data.error);
       } else if (data.hits.length === 0) {
-        setNoResults(true)
-        if (data['humans.txt']) {
-          setApiMessage(data['humans.txt'])
+        setNoResults(true);
+        if (data["humans.txt"]) {
+          setApiMessage(data["humans.txt"]);
         }
       } else {
         const cleanedHits = data.hits.map((hit: any) => ({
           ...hit,
-          content: cleanContent(hit.content)
-        }))
-        setResults(prevResults => reset ? cleanedHits : [...prevResults, ...cleanedHits])
-        setTotalHits(data.estimatedTotalHits)
-        setPage(prevPage => reset ? initialPage + 1 : prevPage + 1)
-        setNoResults(false)
+          content: cleanContent(hit.content),
+        }));
+        setResults((prevResults) =>
+          reset ? cleanedHits : [...prevResults, ...cleanedHits]
+        );
+        setTotalHits(data.estimatedTotalHits);
+        setPage((prevPage) => (reset ? initialPage + 1 : prevPage + 1));
+        setNoResults(false);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred')
+      setError(
+        err instanceof Error ? err.message : "An unexpected error occurred"
+      );
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (error) {
     return (
@@ -113,10 +136,10 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
         <p className="text-red-500 mb-4">错误: {error}</p>
         <Button onClick={() => loadMore(true)}>重试</Button>
       </div>
-    )
+    );
   }
 
-  if (noResults && (totalHits === 0)) {
+  if (noResults && totalHits === 0) {
     return (
       <div className="mt-8 mb-12 text-center">
         <p className="mb-4 font-heading text-lg">没有找到匹配的结果</p>
@@ -127,7 +150,7 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
           <p className="pt-12 text-sm text-gray-500 mt-2">{apiMessage}</p>
         )}
       </div>
-    )
+    );
   }
 
   return (
@@ -153,7 +176,7 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
             <CardTitle>
               <Link
                 href={hit.link}
-                className="hover:underline"
+                className="no-underline hover:underline"
                 dangerouslySetInnerHTML={{
                   __html: hit.title.replace(
                     /<span class="uglyHighlight text-purple-500">/g,
@@ -162,8 +185,10 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
                 }}
               />
             </CardTitle>
-            <section className="text-sm mt-1 break-all overflow-hidden flex justify-between">
-              <div className="flex-1 truncate">{hit.link}</div>
+            <section className="text-sm mt-1 break-all overflow-hidden flex flex-col sm:flex-row sm:justify-between">
+              <div className="flex-1 truncate font-mono mb-1 sm:mb-0">
+                {decodeURI(hit.link).replace(/ /g, "%20")}
+              </div>
               <div className="flex items-center justify-end">
                 {hit.author && (
                   <div className="mr-2">
@@ -171,7 +196,7 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
                     <span
                       dangerouslySetInnerHTML={{
                         __html: hit.author
-                          .replace(/text-purple-500/g, "text-rose-500	")
+                          .replace(/text-purple-500/g, "text-rose-500")
                           .slice(1)
                           .trim(),
                       }}
@@ -190,10 +215,11 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
           <CardContent className={showContent ? "" : "hidden"}>
             <CardDescription
               dangerouslySetInnerHTML={{
-                __html: hit.content/* .replace(/</g, "&lt;") */.replace(
-                  /<span class="uglyHighlight text-purple-500">/g,
-                  '<span style="background-color: #E4B7A0;">'
-                ),
+                __html: hit.content /* .replace(/</g, "&lt;") */
+                  .replace(
+                    /<span class="uglyHighlight text-purple-500">/g,
+                    '<span style="background-color: #E4B7A0;">'
+                  ),
               }}
             />
           </CardContent>
@@ -210,4 +236,3 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
     </div>
   );
 }
-

@@ -9,7 +9,7 @@ export default function SearchPage() {
       <div className="w-full max-w-5xl">
         <h1 className="mt-8 mb-4 font-black text-4xl font-heading text-text shadow-shadow relative">
           <img src="/neosearch.svg" alt="NeoSearch" className="w-24 h-24 inline-block mr-2 absolute move-lr" />
-          <a href="/">丑搜 v3</a>
+          <a className='no-underline' href="/">丑搜 v3</a>
           <div className="float-end block md:hidden pr-4" style={{ marginTop: "-1rem" }}>
             <ManualDialog />
           </div>
