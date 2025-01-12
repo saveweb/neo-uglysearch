@@ -23,7 +23,7 @@ async function getSearchResults(query: string, page: number, sort: Sort) {
   const baseUrl = "https://search-api.saveweb.org/api/search";
   const url = new URL(baseUrl);
   const params = new URLSearchParams({
-    q: encodeURIComponent(query.trim()),
+    q: query.trim(),
     f: "false",
     p: page.toString(),
     h: "true",
@@ -133,7 +133,7 @@ export default function SearchResults({
   if (error) {
     return (
       <div className="mt-8 text-center">
-        <p className="text-red-500 mb-4">错误: {error}</p>
+        <p className="text-red-500 mb-4">{error}</p>
         <Button onClick={() => loadMore(true)}>重试</Button>
       </div>
     );

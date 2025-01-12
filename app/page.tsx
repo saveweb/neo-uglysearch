@@ -4,6 +4,7 @@ import Marquee from "./components/marquee";
 import LoadingSpinner from "./components/loading-spinner";
 import SearchAnimation from "./components/search-animation";
 import ManualDialog from "./components/manual-dialog";
+import StateDisplay from "./components/state-display";
 
 /*
 全文搜索，模糊搜索，简繁同搜，拼音，同音字。
@@ -66,6 +67,8 @@ export default function Home() {
         <Marquee items={marqueeItems} />
       </div>
       <p className="text-center text-sm text-text mb-4">
+        <StateDisplay />
+        <br />
         [AD] 正在进行中的项目：
         <a href="https://github.com/saveweb/review-2024">2024 年年终总结收集</a>
         <br />
