@@ -6,9 +6,15 @@ import { ViewTransitions } from 'next-view-transitions';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '丑搜 v3',
-  description: '中文独立博客全文搜索引擎（收录 2k+ 博客）',
-}
+  title: "丑搜 v3",
+  description: "中文独立博客全文搜索引擎（收录 2k+ 博客）",
+  openGraph: {
+    images: {
+      url: "/preview.png",
+      type: "image/png",
+    },
+  },
+};
 
 export default function RootLayout({
   children,
@@ -18,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="zh">
       <head>
-        <meta name="theme-color" content="#FE9F61" />
+        <meta name="theme-color" content="#c24812" />
       </head>
       <body className={inter.className}>
         <ViewTransitions>

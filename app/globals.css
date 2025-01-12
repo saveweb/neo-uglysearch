@@ -90,3 +90,12 @@ body {
   animation: moveLeftRight 10s infinite ease-in-out;
   pointer-events: none;
 }
+
+a {
+  text-decoration: wavy underline;
+  text-decoration-thickness: 1.2px;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: none;
+}

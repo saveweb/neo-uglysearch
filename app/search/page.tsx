@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import Search from '../components/search'
 import LoadingSpinner from '../components/loading-spinner'
+import ManualDialog from '../components/manual-dialog'
 
 export default function SearchPage() {
   return (
@@ -9,6 +10,9 @@ export default function SearchPage() {
         <h1 className="mt-8 mb-4 font-black text-4xl font-heading text-text shadow-shadow relative">
           <img src="/neosearch.svg" alt="NeoSearch" className="w-24 h-24 inline-block mr-2 absolute move-lr" />
           <a href="/">丑搜 v3</a>
+          <div className="float-end block md:hidden pr-4" style={{ marginTop: "-1rem" }}>
+            <ManualDialog />
+          </div>
         </h1>
         <Suspense fallback={<LoadingSpinner />}>
           <Search />

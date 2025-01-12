@@ -3,6 +3,7 @@ import Search from "./components/search";
 import Marquee from "./components/marquee";
 import LoadingSpinner from "./components/loading-spinner";
 import SearchAnimation from "./components/search-animation";
+import ManualDialog from "./components/manual-dialog";
 
 /*
 全文搜索，模糊搜索，简繁同搜，拼音，同音字。
@@ -50,6 +51,9 @@ export default function Home() {
             className="w-24 h-24 inline-block mr-2 absolute translate-x-32"
           />
           丑搜 v3
+          <div className="ml-auto block md:hidden">
+            <ManualDialog />
+          </div>
         </h1>
         <section className="max-w-4xl w-full m-auto">
           <Suspense fallback={<LoadingSpinner />}>
@@ -62,12 +66,15 @@ export default function Home() {
         <Marquee items={marqueeItems} />
       </div>
       <p className="text-center text-sm text-text mb-4">
-        Save the Web Project © 2025.
+        [AD] 正在进行中的项目：
+        <a href="https://github.com/saveweb/review-2024">2024 年年终总结收集</a>
+        <br />
+        <a href="https://saveweb.org">Save the Web Project</a> © 2025.
         <br />
         Open sourced at{" "}
         <a
           href="https://github.com/saveweb/neo-uglysearch"
-          className="text-primary underline"
+          className="text-primary"
         >
           GitHub
         </a>{" "}

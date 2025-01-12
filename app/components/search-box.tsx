@@ -41,7 +41,7 @@ export default function Search(props: Props) {
   return (
     <div className="w-full">
       <div className="flex flex-row items-center justify-end mb-2">
-        <div className="mr-auto">
+        <div className="mr-auto hidden md:block">
           <ManualDialog />
         </div>
         <label className="mx-2" htmlFor="use-advanced">

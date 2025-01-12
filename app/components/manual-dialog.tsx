@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 
 export default function ManualDialog() {
@@ -18,9 +16,6 @@ export default function ManualDialog() {
       <DialogContent className="sm:max-w-[1325px] h-full">
         <DialogHeader>
           <DialogTitle>使用指南</DialogTitle>
-          {/* <DialogDescription>
-          丑搜 v3 使用指南。
-        </DialogDescription> */}
         </DialogHeader>
         <iframe
           frameBorder="0"

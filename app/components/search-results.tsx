@@ -6,7 +6,6 @@ import { useInView } from 'react-intersection-observer'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import LoadingAnimation from "./loading-animation"
-import LoadingSpinner from './loading-spinner'
 import { cleanContent } from '../utils/cleanContent'
 import NotFoundAnimation from "./not-found-animation"
 import { Switch } from '@/components/ui/switch'
@@ -133,13 +132,16 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
 
   return (
     <div className="mt-8">
-      <div className='flex justify-between'>
+      <div className="flex justify-between">
         <div className="mb-4 font-base">
-        {results.length > 0 ? `找到约 ${totalHits} 条结果` : '正在查询'}
+          {results.length > 0 ? `找到约 ${totalHits} 条结果` : "正在查询"}
         </div>
         <div>
-          <label className="mx-2" htmlFor="show-desc">显示内容</label>
-          <Switch id="show-desc"
+          <label className="mx-2" htmlFor="show-desc">
+            显示内容
+          </label>
+          <Switch
+            id="show-desc"
             checked={showContent}
             onCheckedChange={handleToggle}
           />
@@ -156,7 +158,7 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
                   __html: hit.title.replace(
                     /<span class="uglyHighlight text-purple-500">/g,
                     '<span style="background-color: #E4B7A0;">'
-                  )
+                  ),
                 }}
               />
             </CardTitle>
@@ -164,10 +166,20 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
               <div className="flex-1 truncate">{hit.link}</div>
               <div className="flex items-center justify-end">
                 {hit.author && (
-                  <div className="mr-2">作者: <span dangerouslySetInnerHTML={{ __html: hit.author.replace(/text-purple-500/g, "text-rose-500	").slice(1).trim() }}></span></div>
+                  <div className="mr-2">
+                    作者：
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: hit.author
+                          .replace(/text-purple-500/g, "text-rose-500	")
+                          .slice(1)
+                          .trim(),
+                      }}
+                    ></span>
+                  </div>
                 )}
                 <div>
-                  日期:
+                  日期：
                   <time dateTime={hit.date} suppressHydrationWarning>
                     {new Date(hit.date * 1000).toLocaleDateString()}
                   </time>
@@ -175,21 +187,19 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
               </div>
             </section>
           </CardHeader>
-          <CardContent className={showContent ? '' : 'hidden'}>
+          <CardContent className={showContent ? "" : "hidden"}>
             <CardDescription
               dangerouslySetInnerHTML={{
-                __html: hit.content.replace(
+                __html: hit.content/* .replace(/</g, "&lt;") */.replace(
                   /<span class="uglyHighlight text-purple-500">/g,
                   '<span style="background-color: #E4B7A0;">'
-                )
+                ),
               }}
             />
           </CardContent>
         </Card>
       ))}
-      {loading &&
-        <LoadingAnimation />
-      }
+      {loading && <LoadingAnimation />}
       {!noResults && <div ref={ref} className="h-10" />}
       {noResults && totalHits > 0 && (
         <div className="mt-8 mb-12 text-center">
@@ -198,6 +208,6 @@ export default function SearchResults({ initialQuery, initialPage, sort }: { ini
         </div>
       )}
     </div>
-  )
+  );
 }
 
