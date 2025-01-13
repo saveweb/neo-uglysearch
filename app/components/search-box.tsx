@@ -95,10 +95,7 @@ export default function Search(props: Props) {
       {useAdvancedSearch ? (
         <AdvancedSearchInput value={props.query} onChange={props.onChange} />
       ) : (
-        <BasicSearchBox
-          query={props.query}
-          onChange={(e) => props.onChange(e.target.value)}
-        />
+        <BasicSearchBox query={props.query} handleChange={props.onChange} />
       )}
       {/* <Button size="lg" type="submit">搜索</Button> */}
     </div>

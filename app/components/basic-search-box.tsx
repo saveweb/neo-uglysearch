@@ -4,17 +4,17 @@ import { Input } from "@/components/ui/input";
 
 export interface Props {
   query: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (s: string) => void;
 }
 
 function SearchBox(props: Props) {
-  const { query, onChange } = props;
+  const { query, handleChange } = props;
   return (
     <Input
       type="text"
       placeholder="输入搜索关键词..."
       value={query}
-      onChange={onChange}
+      handleChange={handleChange}
       className="w-full text-lg"
     />
   );
