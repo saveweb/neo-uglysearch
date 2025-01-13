@@ -31,8 +31,9 @@ export enum Sort {
 }
 
 export default function Search(props: Props) {
-  const [query, setQuery] = React.useState(props.query);
-  const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(props.initAdvancedSearch);
+  const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(
+    props.initAdvancedSearch
+  );
   const [sort, setSort] = React.useState<Sort>(Sort.Relevance);
   useEffect(() => {
     props.onSortChange(sort);
@@ -92,14 +93,11 @@ export default function Search(props: Props) {
       </div>
 
       {useAdvancedSearch ? (
-        <AdvancedSearchInput value={query} onChange={props.onChange} />
+        <AdvancedSearchInput value={props.query} onChange={props.onChange} />
       ) : (
         <BasicSearchBox
-          query={query}
-          onChange={(e) => {
-            props.onChange(e.target.value);
-            setQuery(e.target.value);
-          }}
+          query={props.query}
+          onChange={(e) => props.onChange(e.target.value)}
         />
       )}
       {/* <Button size="lg" type="submit">搜索</Button> */}
