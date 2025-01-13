@@ -62,7 +62,7 @@ export default function Search(props: Props) {
             value={sort}
             onValueChange={(value) => setSort(value as Sort)}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[120px] md:w-[160px]">
               <SelectValue placeholder="默认相关性" />
             </SelectTrigger>
             <SelectContent>

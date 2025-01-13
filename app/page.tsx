@@ -72,7 +72,7 @@ export default function Home() {
         [AD] 正在进行中的项目：
         <a href="https://github.com/saveweb/review-2024">2024 年年终总结收集</a>
         <br />
-        neo-uglysearch@0.3.0 by <a href="https://saveweb.org">Save the Web Project</a> © 2025.
+        neo-uglysearch@0.3.3 by <a href="https://saveweb.org">Save the Web Project</a> © 2025.
         <br />
         Hosted on Vercel & Open sourced at{" "}
         <a
