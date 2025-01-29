@@ -1,3 +1,3 @@
-import AdvancedFilter from "./filter";
+import AdvancedFilterBuilder from "./filter";
 
-export default AdvancedFilter;
+export default AdvancedFilterBuilder;

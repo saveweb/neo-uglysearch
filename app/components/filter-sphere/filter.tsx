@@ -9,16 +9,19 @@ import { filterRuleToQueryString } from "./transform";
 
 export interface Props {
   value?: string;
-  onChange?: (value: string, viewUpdate: any) => void;
+  onChange?: (value: string) => void;
 }
 
-const AdvancedFilter = (props: Props) => {
-  const { filterRule, context } = useFilterSphere({
+const AdvancedFilterBuilder = (props: Props) => {
+  const { context } = useFilterSphere({
     schema: filterSchema,
+    // defaultRule: queryStringToFilterRule(props.value),
     filterFnList,
     getLocaleText,
+    onRuleChange: ({ filterRule }) => {
+      props.onChange?.(filterRuleToQueryString(filterRule));
+    },
   });
-  console.log("filterRule:", filterRuleToQueryString(filterRule));
   return (
     <FilterSphereProvider context={context} theme={filterTheme}>
       <FilterBuilder />
@@ -26,4 +29,4 @@ const AdvancedFilter = (props: Props) => {
   );
 };
 
-export default AdvancedFilter;
+export default AdvancedFilterBuilder;
