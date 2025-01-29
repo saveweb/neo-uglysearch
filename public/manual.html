@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x65b0;&#x4e11;&#x641c;&#x4f7f;&#x7528;&#x624b;&#x518c;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+    font-size: 18px;
+    line-height: 2;
+    margin: 0;
+    padding: 0;
+}
+</style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="新丑搜使用手册">新丑搜使用手册</h1>
+<h2 id="简单查询">简单查询</h2>
+<p>全文搜索，模糊搜索，简繁同搜，拼音，同音字。</p>
+<p>简单查询会在 &quot;title&quot;, &quot;content&quot;, &quot;author&quot;, &quot;link&quot;, &quot;tags&quot; 字段中搜索。多个关键词以空格分隔。</p>
+<h2 id="过滤器高级搜索">过滤器（高级搜索）</h2>
+<p>过滤器识别的条件：</p>
+<p>当搜索查询中包含 <code>(</code> ，并且查询以 <code>)</code> <strong>结尾</strong>时。从第一个 <code>(</code> 到最后一个 <code>)</code> 之间的内容被认为是一个过滤器。否则认为整个查询是简单查询。</p>
+<h3 id="简单查询和过滤器一起用">简单查询和过滤器一起用</h3>
+<p>可以同时使用简单查询和过滤器，像这样 <code>博客 备份 (title = &quot;hello world&quot;)</code> 在标题为 &quot;hello world&quot; 的文章中搜索 &quot;博客&quot; &quot;备份&quot;。</p>
+<h3 id="语法">语法</h3>
+<p>单个过滤器的语法如下：</p>
+<pre><code>&lt;属性&gt; &lt;运算符&gt; &lt;值&gt;
+</code></pre>
+<h4 id="属性">属性</h4>
+<p>支持过滤的属性有：</p>
+<pre><code>title: str, 文章标题
+id: int, 文章被抓取入库的实际时间，以微秒计 (1/1,000,000)，UTC 时间
+id_feed: int, 文章所属的 feed ID
+author: list[str], 文章作者（注意是列表）
+tags: list[str], 文章标签（注意是列表）
+date: int, feed 自行声明的文章发布时间，以秒计，UTC 时间（注意时间直接取自 feed，可能不准确）
+content: str, 文章内容（markdown）
+link: str, 文章链接
+content_length: int, 文章字数（不准确）
+</code></pre>
+<h4 id="运算符">运算符</h4>
+<p>运算符有：</p>
+<pre><code class="language-sql">`<span class="hljs-operator">=</span>`, 
+`<span class="hljs-operator">!=</span>`, 
+`<span class="hljs-operator">&gt;=</span>`, 
+`<span class="hljs-operator">&gt;</span>`, 
+`<span class="hljs-operator">&lt;=</span>`, 
+`<span class="hljs-operator">&lt;</span>`, 
+`<span class="hljs-keyword">IN</span>`, 
+`<span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span>`, 
+`<span class="hljs-keyword">TO</span>`, (与 `<span class="hljs-operator">&gt;=</span> <span class="hljs-keyword">AND</span> <span class="hljs-operator">&lt;=</span>` 等价)
+`<span class="hljs-keyword">EXISTS</span>`, 
+`<span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span>`, 
+`<span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>`, 
+`<span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>`, 
+`<span class="hljs-keyword">IS</span> <span class="hljs-keyword">EMPTY</span>`, 
+`<span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EMPTY</span>`, 
+`<span class="hljs-keyword">CONTAINS</span>`, 
+`<span class="hljs-keyword">NOT</span> <span class="hljs-keyword">CONTAINS</span>`, 
+`STARTS <span class="hljs-keyword">WITH</span>`, 
+`<span class="hljs-keyword">NOT</span> STARTS <span class="hljs-keyword">WITH</span>`
+</code></pre>
+<h4 id="值">值</h4>
+<p>如果值里包含空格或者特殊字符，可以用 <code>&quot;</code> 包裹。</p>
+<h5 id="魔法函数">魔法函数</h5>
+<p>为方便查以微秒计的 id 和以秒计的 date，提供了两个魔法函数：</p>
+<ul>
+<li>us()</li>
+<li>sec()</li>
+</ul>
+<p>它们接受 <code>%Y-%m-%d</code> 格式的日期字符串，会在查询时被隐式转换为对应的 UTC 时间戳。（注意不要用<code>&quot;</code>包裹日期）</p>
+<p>如 <code>id &gt;= us(2025-01-01)</code> 会被转换为 <code>id &gt;= 1735689600</code>。</p>
+<h3 id="组合过滤">组合过滤</h3>
+<p>多个过滤器可以通过 <code>AND</code> 或 <code>OR</code> 连接，可以用 <code>()</code> 包裹子查询。</p>
+<h3 id="例子">例子</h3>
+<pre><code class="language-sql">(title <span class="hljs-operator">=</span> &quot;hello world&quot;)
+(tags <span class="hljs-keyword">IN</span> [周报, 日报, 周报] <span class="hljs-keyword">AND</span> <span class="hljs-type">date</span> sec(<span class="hljs-number">2024</span><span class="hljs-number">-01</span><span class="hljs-number">-01</span>) <span class="hljs-keyword">TO</span> sec(<span class="hljs-number">2025</span><span class="hljs-number">-01</span><span class="hljs-number">-01</span>))
+(((tags <span class="hljs-keyword">IN</span> [ctf, writeup, pwn, crypto, misc, reverse]) <span class="hljs-keyword">OR</span> (link <span class="hljs-keyword">CONTAINS</span> &quot;ctf&quot; <span class="hljs-keyword">OR</span> link <span class="hljs-keyword">CONTAINS</span> &quot;writeup&quot;) <span class="hljs-keyword">OR</span> (title <span class="hljs-keyword">CONTAINS</span> &quot;ctf&quot; <span class="hljs-keyword">OR</span> title <span class="hljs-keyword">CONTAINS</span> &quot;writeup&quot;)) <span class="hljs-keyword">AND</span> (author <span class="hljs-operator">!=</span> MiaoTony))
+作业 (id_feed<span class="hljs-operator">=</span><span class="hljs-number">1662</span>)
+((  (id_feed<span class="hljs-operator">=</span><span class="hljs-number">24</span> <span class="hljs-keyword">AND</span> title STARTS <span class="hljs-keyword">WITH</span> &quot;科技爱好者周刊&quot;) <span class="hljs-keyword">OR</span> 
+    (title STARTS <span class="hljs-keyword">WITH</span> &quot;产品周刊&quot;) <span class="hljs-keyword">OR</span>
+    (link <span class="hljs-keyword">CONTAINS</span> &quot;blog.save-web.org&quot; <span class="hljs-keyword">AND</span> title <span class="hljs-keyword">CONTAINS</span> &quot;周报&quot;) <span class="hljs-keyword">OR</span> 
+    (link <span class="hljs-keyword">CONTAINS</span> &quot;pseudoyu.com&quot; <span class="hljs-keyword">AND</span> title <span class="hljs-keyword">CONTAINS</span> &quot;周报&quot;)
+    ) <span class="hljs-keyword">AND</span> id <span class="hljs-operator">&gt;=</span> us(<span class="hljs-number">2025</span><span class="hljs-number">-1</span><span class="hljs-number">-1</span>) <span class="hljs-keyword">AND</span> id <span class="hljs-operator">&lt;=</span> us(<span class="hljs-number">2025</span><span class="hljs-number">-1</span><span class="hljs-number">-11</span>))
+(title <span class="hljs-keyword">CONTAINS</span> 年终总结 <span class="hljs-keyword">AND</span> (link <span class="hljs-keyword">CONTAINS</span> &quot;.github.io&quot; <span class="hljs-keyword">OR</span> link <span class="hljs-keyword">CONTAINS</span> &quot;.org/&quot;))
+(author <span class="hljs-keyword">IN</span> [diygod] <span class="hljs-keyword">AND</span> (content <span class="hljs-keyword">CONTAINS</span> rss))
+</code></pre>
+<h1 id="排序">排序</h1>
+<p>搜索结果默认以匹配度排序，没有时间权重，方便找到相关度最高的文章。但也可改变排序方式。</p>
+</body>
+</html>

@@ -29,11 +29,10 @@ const marqueeItems = [
   "Powered by Meilisearch",
   "简繁同搜",
   "RSS 订阅",
-  "收录 2k+ 博客",
+  "收录 1.7k+ 博客",
   "个人网站",
   "历久弥新",
   "Atom Feed",
-  "前端处处是神话",
   "互联网档案馆",
   "Designed by 前端之猫",
 ];
