@@ -11,7 +11,6 @@ import {
   type FilterTheme,
   createFilterTheme,
   presetTheme,
-  useView,
 } from "@fn-sphere/filter";
 import { type ChangeEvent, useCallback } from "react";
 
@@ -26,7 +25,7 @@ const componentsSpec = {
       },
       [onChange]
     );
-    return <Input onChange={handleChange} {...props} />;
+    return <Input className="h-10" onChange={handleChange} {...props} />;
   },
   Select: ({ value, onChange, options = [], className, disabled }) => {
     const selectedIdx = options.findIndex((option) => option.value === value);
@@ -43,7 +42,7 @@ const componentsSpec = {
         onValueChange={handleChange}
         disabled={disabled}
       >
-        <SelectTrigger className="min-w-24">
+        <SelectTrigger className="min-w-28">
           <SelectValue className={className} />
         </SelectTrigger>
         <SelectContent>
@@ -60,13 +59,20 @@ const componentsSpec = {
 
 const templatesSpec = {
   FilterGroupContainer: (props) => {
-    const PresetFilterGroupContainer = presetTheme.templates.FilterGroupContainer;
+    const PresetFilterGroupContainer =
+      presetTheme.templates.FilterGroupContainer;
     return (
       <PresetFilterGroupContainer
-        className="flex flex-col items-start rounded-base border-2  border-border px-3 py-2 gap-4"
+        // reset preset styles
+        style={{}}
+        className="flex flex-col items-start rounded-base border-2  border-border px-3 py-2 gap-2 bg-opacity"
         {...props}
       />
     );
+  },
+  FilterSelect: (props) => {
+    const PresetFilterSelect = presetTheme.templates.FilterSelect;
+    return <PresetFilterSelect tryRetainArgs {...props} />;
   },
 } satisfies Partial<FilterTheme["templates"]>;
 

@@ -59,6 +59,24 @@ function transformFilterGroup(filterGroup: FilterGroup): string {
   return `(${result})`;
 }
 
+/**
+ * Transforms a FilterGroup object into a query string format for advanced search.
+ *
+ * @example
+ * ```ts
+ * filterRuleToQueryString({
+ *   type: "FilterGroup",
+ *   op: "and",
+ *   conditions: [{
+ *     type: "Filter",
+ *     path: ["title"],
+ *     name: "equals",
+ *     args: ["hello world"]
+ *   }]
+ * })
+ * // "(title = "hello world")"
+ * ```
+ */
 export const filterRuleToQueryString = (filterGroup: FilterGroup) => {
   return transformFilterGroup(filterGroup);
 };
