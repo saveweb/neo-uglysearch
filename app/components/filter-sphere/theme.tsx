@@ -7,10 +7,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import {
   type FilterTheme,
   createFilterTheme,
   presetTheme,
+  useFilterGroup,
+  useRootRule,
+  useView,
 } from "@fn-sphere/filter";
 import { type ChangeEvent, useCallback } from "react";
 
@@ -58,16 +62,69 @@ const componentsSpec = {
 } satisfies Partial<FilterTheme["components"]>;
 
 const templatesSpec = {
-  FilterGroupContainer: (props) => {
-    const PresetFilterGroupContainer =
-      presetTheme.templates.FilterGroupContainer;
+  FilterGroupContainer: ({ rule, children, ...props }) => {
+    const { getLocaleText } = useRootRule();
+    const {
+      ruleState: { isRoot, depth },
+      toggleGroupOp,
+      appendChildRule,
+      appendChildGroup,
+      removeGroup,
+    } = useFilterGroup(rule);
+    const { Button } = useView("components");
+
+    const text =
+      rule.op === "or"
+        ? getLocaleText("operatorOr")
+        : getLocaleText("operatorAnd");
+
+    const handleToggleGroupOp = useCallback(() => {
+      toggleGroupOp();
+    }, [toggleGroupOp]);
+
+    const handleAddCondition = useCallback(() => {
+      appendChildRule();
+    }, [appendChildRule]);
+
+    const handleAddGroup = useCallback(() => {
+      appendChildGroup();
+    }, [appendChildGroup]);
+
+    const handleDeleteGroup = useCallback(() => {
+      removeGroup();
+    }, [removeGroup]);
+
     return (
-      <PresetFilterGroupContainer
-        // reset preset styles
-        style={{}}
-        className="flex flex-col items-start rounded-base border-2  border-border px-3 py-2 gap-2 bg-opacity"
+      <div
+        className={cn(
+          "relative flex flex-col items-start rounded-base border-2 border-border px-3 py-2 gap-2 bg-opacity pt-8",
+          isRoot ? "mt-8" : "mt-6 mb-2"
+        )}
         {...props}
-      />
+      >
+        <Button
+          className="absolute top-0 -translate-y-1/2"
+          onClick={handleToggleGroupOp}
+        >
+          {text}
+        </Button>
+        {children}
+        <div className="flex gap-2">
+          <Button onClick={handleAddCondition}>
+            {getLocaleText("addRule")}
+          </Button>
+          {depth < 3 && (
+            <Button onClick={handleAddGroup}>
+              {getLocaleText("addGroup")}
+            </Button>
+          )}
+          {!isRoot && (
+            <Button onClick={handleDeleteGroup}>
+              {getLocaleText("deleteGroup")}
+            </Button>
+          )}
+        </div>
+      </div>
     );
   },
   FilterSelect: (props) => {
