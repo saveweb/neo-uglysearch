@@ -11,6 +11,7 @@ const FILTER_OPERATORS: Record<string, string> = {
   contains: "CONTAINS",
   notContains: "NOT CONTAINS",
   startsWith: "STARTS WITH",
+  notStartsWith: "NOT STARTS WITH",
   in: "IN",
   notIn: "NOT IN",
   isNull: "IS NULL",
