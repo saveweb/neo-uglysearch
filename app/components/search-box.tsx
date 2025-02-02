@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ManualDialog from "./manual-dialog";
+import AdvancedFilterBuilder from "./filter-sphere";
 
 export interface Props {
   query: string;
@@ -34,6 +35,9 @@ export default function Search(props: Props) {
   const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(
     props.initAdvancedSearch
   );
+  const [isExpertMode, setIsExpertMode] = React.useState(
+    props.initAdvancedSearch
+  );
   const [sort, setSort] = React.useState<Sort>(Sort.Relevance);
   useEffect(() => {
     props.onSortChange(sort);
@@ -45,6 +49,19 @@ export default function Search(props: Props) {
         <div className="mr-auto hidden md:block">
           <ManualDialog />
         </div>
+        {useAdvancedSearch && (
+          <>
+            <label className="mx-2" htmlFor="expert-mode">
+              专家模式
+            </label>
+            <Switch
+              className="inline-block"
+              id="expert-mode"
+              checked={isExpertMode}
+              onCheckedChange={(prev) => setIsExpertMode(prev)}
+            />
+          </>
+        )}
         <label className="mx-2" htmlFor="use-advanced">
           高级搜索
         </label>
@@ -93,7 +110,14 @@ export default function Search(props: Props) {
       </div>
 
       {useAdvancedSearch ? (
-        <AdvancedSearchInput value={props.query} onChange={props.onChange} />
+        isExpertMode ? (
+          <AdvancedSearchInput value={props.query} onChange={props.onChange} />
+        ) : (
+          <AdvancedFilterBuilder
+            value={props.query}
+            onChange={props.onChange}
+          />
+        )
       ) : (
         <BasicSearchBox query={props.query} handleChange={props.onChange} />
       )}
