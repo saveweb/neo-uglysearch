@@ -13,6 +13,12 @@ const FILTER_OPERATORS: Record<string, string> = {
   startsWith: "STARTS WITH",
   in: "IN",
   notIn: "NOT IN",
+  isNull: "IS NULL",
+  isNotNull: "IS NOT NULL",
+  isEmpty: "IS EMPTY",
+  isNotEmpty: "IS NOT EMPTY",
+  before: "<",
+  after: ">",
 };
 
 function transformSingleFilter(filter: SingleFilter): string | null {
@@ -35,11 +41,18 @@ function transformSingleFilter(filter: SingleFilter): string | null {
   if (typeof value === "string") {
     return `${path} ${operator} "${value}"`;
   }
+  // Handle date values
+  if (value instanceof Date) {
+    const dateStr = `sec(${value.getFullYear()}-${
+      value.getMonth() + 1
+    }-${value.getDate()})`;
+    return `${path} ${operator} ${dateStr}`;
+  }
 
   return `${path} ${operator} ${value}`;
 }
 
-function transformFilterGroup(filterGroup: FilterGroup): string {
+function transformFilterGroup(filterGroup: FilterGroup): string | null {
   if (!filterGroup.conditions.length) return "";
 
   const conditions = filterGroup.conditions.map((condition) => {
@@ -53,7 +66,7 @@ function transformFilterGroup(filterGroup: FilterGroup): string {
   const operator = filterGroup.op.toUpperCase() as Uppercase<FilterGroup["op"]>;
   const result = conditions.filter((i) => i !== null).join(` ${operator} `);
   if (!result) {
-    return "";
+    return null;
   }
 
   return `(${result})`;
@@ -78,5 +91,5 @@ function transformFilterGroup(filterGroup: FilterGroup): string {
  * ```
  */
 export const filterRuleToQueryString = (filterGroup: FilterGroup) => {
-  return transformFilterGroup(filterGroup);
+  return transformFilterGroup(filterGroup) ?? "";
 };
