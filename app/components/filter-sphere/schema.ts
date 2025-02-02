@@ -11,7 +11,7 @@ export const filterSchema = z.object({
   date: z.date().describe("发布时间"),
   content: z.string().describe("文章内容"),
   link: z.string().describe("文章链接"),
-  content_length: z.string().describe("文章字数"),
+  content_length: z.number().describe("文章字数"),
   // fn: z.union([z.literal("us"), z.literal("sec")]).describe("魔法函数"),
 });
 
