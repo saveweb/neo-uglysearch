@@ -66,7 +66,7 @@ export default function Home() {
       <div className="my-8 w-full">
         <Marquee items={marqueeItems} />
       </div>
-      <p className="text-center text-sm text-text mb-4">
+      <div className="text-center text-sm text-text mb-4">
         <StateDisplay />
         <br />
         [AD] 正在进行中的项目：
@@ -82,7 +82,7 @@ export default function Home() {
           GitHub
         </a>{" "}
         via MIT License.
-      </p>
+      </div>
     </main>
   );
 }
