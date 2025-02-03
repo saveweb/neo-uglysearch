@@ -126,6 +126,44 @@ describe("filterRuleToQueryString", () => {
     expect(filterRuleToQueryString(filter)).toBe("(createdAt < sec(2024-1-1))");
   });
 
+  it("should handle unary filter cases", () => {
+    const filter: FilterGroup = {
+      id: "0" as FilterGroup["id"],
+      type: "FilterGroup",
+      op: "and",
+      conditions: [
+        {
+          id: "1" as FilterGroup["id"],
+          type: "Filter",
+          path: ["title"],
+          name: "isEmpty",
+          args: [],
+        },
+      ],
+    };
+
+    expect(filterRuleToQueryString(filter)).toBe("(title IS EMPTY)");
+  });
+
+  it("should return empty string for empty filter", () => {
+    const filter: FilterGroup = {
+      id: "0" as FilterGroup["id"],
+      type: "FilterGroup",
+      op: "and",
+      conditions: [
+        {
+          id: "1" as FilterGroup["id"],
+          type: "Filter",
+          path: ["title"],
+          name: "equals",
+          args: [],
+        },
+      ],
+    };
+
+    expect(filterRuleToQueryString(filter)).toBe("");
+  });
+
   it("should return empty string for empty filter group", () => {
     const filter: FilterGroup = {
       id: "0" as FilterGroup["id"],

@@ -1,4 +1,6 @@
 import { FilterGroup, SingleFilter } from "@fn-sphere/filter";
+import { filterFnList } from "./schema";
+import { z } from "zod";
 
 // Define operator mapping
 const FILTER_OPERATORS: Record<string, string> = {
@@ -22,12 +24,33 @@ const FILTER_OPERATORS: Record<string, string> = {
   after: ">",
 };
 
+/**
+ * Checks if a filter is unary (takes 0 or 1 parameters)
+ *
+ * Unary filters include operations like isNull, isEmpty, isNotNull etc.
+ */
+const checkUnaryFilter = (filterName: string) => {
+  // use `validateRule` from @fn-sphere/core in the future
+  const filterSchema = filterFnList.find((fn) => fn.name === filterName);
+  if (!filterSchema) throw new Error("Unknown filter! " + filterName);
+  const filterDefine =
+    typeof filterSchema.define === "function"
+      ? filterSchema.define(z.any())
+      : filterSchema.define;
+  const parameters = filterDefine.parameters();
+  return parameters.items.length <= 1;
+};
+
 function transformSingleFilter(filter: SingleFilter): string | null {
   const path = filter.path?.[0];
-  const value = filter.args[0];
   const operator = filter.name ? FILTER_OPERATORS[filter.name] : undefined;
+  const value = filter.args[0];
 
-  if (path === undefined || operator === undefined || value === undefined) {
+  if (!filter.name || path === undefined || operator === undefined) {
+    return null;
+  }
+  const isUnaryFilter = checkUnaryFilter(filter.name);
+  if (value === undefined && !isUnaryFilter) {
     return null;
   }
 
@@ -36,6 +59,10 @@ function transformSingleFilter(filter: SingleFilter): string | null {
     return `${path} ${operator} [${value
       .map((v) => (typeof v === "string" ? `${v}` : v))
       .join(", ")}]`;
+  }
+
+  if (value === undefined) {
+    return `${path} ${operator}`;
   }
 
   // Handle string values
