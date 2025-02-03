@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { filterRuleToQueryString } from "./transform";
+import {
+  deserializeFilterGroup,
+  filterRuleToQueryString,
+  serializeFilterGroup,
+} from "./transform";
 import type { FilterGroup } from "@fn-sphere/filter";
 
 describe("filterRuleToQueryString", () => {
@@ -172,5 +176,54 @@ describe("filterRuleToQueryString", () => {
       conditions: [],
     };
     expect(filterRuleToQueryString(filter)).toBe("");
+  });
+});
+
+describe("FilterGroup Serialization", () => {
+  it("should serialize and deserialize a basic FilterGroup", () => {
+    const filter: FilterGroup = {
+      id: "0" as FilterGroup["id"],
+      type: "FilterGroup",
+      op: "and",
+      conditions: [
+        {
+          id: "1" as FilterGroup["id"],
+          type: "Filter",
+          path: ["title"],
+          name: "equals",
+          args: ["test"],
+        },
+      ],
+    };
+
+    const serialized = serializeFilterGroup(filter);
+    const deserialized = deserializeFilterGroup(serialized);
+    expect(deserialized).toEqual(filter);
+  });
+
+  it("should handle Date objects in args correctly", () => {
+    const date = new Date("2024-03-15T12:00:00Z");
+    const filter: FilterGroup = {
+      id: "0" as FilterGroup["id"],
+      type: "FilterGroup",
+      op: "and",
+      conditions: [
+        {
+          id: "1" as FilterGroup["id"],
+          type: "Filter",
+          path: ["createdAt"],
+          name: "equals",
+          args: [date],
+        },
+      ],
+    };
+
+    const serialized = serializeFilterGroup(filter);
+    const deserialized = deserializeFilterGroup(serialized);
+    console.log(serialized, deserialized)
+    expect((deserialized.conditions[0] as any).args[0]).toBeInstanceOf(Date);
+    expect((deserialized.conditions[0] as any).args[0].toISOString()).toBe(
+      date.toISOString()
+    );
   });
 });
