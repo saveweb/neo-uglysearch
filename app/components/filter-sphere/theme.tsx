@@ -18,6 +18,8 @@ import {
 } from "@fn-sphere/filter";
 import { type ChangeEvent, useCallback } from "react";
 
+// See http://www.waterwater.moe/fn-sphere/customization/theme/
+
 const componentsSpec = {
   Button: (props) => {
     return <Button variant="noShadow" {...props} />;
@@ -71,7 +73,6 @@ const templatesSpec = {
       appendChildGroup,
       removeGroup,
     } = useFilterGroup(rule);
-    const { Button } = useView("components");
 
     const text =
       rule.op === "or"
@@ -102,28 +103,23 @@ const templatesSpec = {
         )}
         {...props}
       >
-        <Button
-          className="absolute top-0 -translate-y-1/2"
-          onClick={handleToggleGroupOp}
-        >
-          {text}
-        </Button>
-        {children}
-        <div className="flex gap-2">
-          <Button onClick={handleAddCondition}>
+        <div className="flex gap-2 absolute top-0 -translate-y-1/2">
+          <Button onClick={handleToggleGroupOp}>{text}</Button>
+          <Button variant="neutral" onClick={handleAddCondition}>
             {getLocaleText("addRule")}
           </Button>
           {depth < 3 && (
-            <Button onClick={handleAddGroup}>
+            <Button variant="neutral" onClick={handleAddGroup}>
               {getLocaleText("addGroup")}
             </Button>
           )}
           {!isRoot && (
-            <Button onClick={handleDeleteGroup}>
+            <Button variant="neutral" onClick={handleDeleteGroup}>
               {getLocaleText("deleteGroup")}
             </Button>
           )}
         </div>
+        {children}
       </div>
     );
   },

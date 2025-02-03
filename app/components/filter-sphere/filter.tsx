@@ -18,7 +18,6 @@ let cacheRule: FilterGroup | undefined = undefined;
 
 const AdvancedFilterBuilder = (props: Props) => {
   const defaultRule = props.value === cacheKey ? cacheRule : undefined;
-  console.log("default rule", defaultRule);
   const { context } = useFilterSphere({
     schema: filterSchema,
     defaultRule,
@@ -29,7 +28,6 @@ const AdvancedFilterBuilder = (props: Props) => {
       props.onChange?.(query);
       cacheKey = query;
       cacheRule = filterRule;
-      console.log("rule", query, filterRule);
     },
   });
   return (
