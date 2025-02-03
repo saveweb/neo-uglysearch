@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ManualDialog from "./manual-dialog";
-import AdvancedFilterBuilder from "./filter-sphere";
+import AdvancedFilterBuilder, { getCachedFilterRule } from "./filter-sphere";
 
 export interface Props {
   query: string;
@@ -36,7 +36,7 @@ export default function Search(props: Props) {
     props.initAdvancedSearch
   );
   const [isExpertMode, setIsExpertMode] = React.useState(
-    props.initAdvancedSearch
+    props.initAdvancedSearch && !getCachedFilterRule(props.query)
   );
   const [sort, setSort] = React.useState<Sort>(Sort.Relevance);
   useEffect(() => {

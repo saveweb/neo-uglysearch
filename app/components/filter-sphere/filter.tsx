@@ -7,17 +7,15 @@ import {
 import { filterFnList, filterSchema, getLocaleText } from "./schema";
 import { filterTheme } from "./theme";
 import { filterRuleToQueryString } from "./transform";
+import { cacheFilterRule, getCachedFilterRule } from "./utils";
 
 export interface Props {
   value?: string;
   onChange?: (value: string) => void;
 }
 
-let cacheKey = "";
-let cacheRule: FilterGroup | undefined = undefined;
-
 const AdvancedFilterBuilder = (props: Props) => {
-  const defaultRule = props.value === cacheKey ? cacheRule : undefined;
+  const defaultRule = getCachedFilterRule(props.value ?? "") ?? undefined;
   const { context } = useFilterSphere({
     schema: filterSchema,
     defaultRule,
@@ -26,8 +24,7 @@ const AdvancedFilterBuilder = (props: Props) => {
     onRuleChange: ({ filterRule }) => {
       const query = filterRuleToQueryString(filterRule);
       props.onChange?.(query);
-      cacheKey = query;
-      cacheRule = filterRule;
+      cacheFilterRule(query, filterRule);
     },
   });
   return (
