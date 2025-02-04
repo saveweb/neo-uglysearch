@@ -7,14 +7,16 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@codemirror/lang-sql": "^6.8.0",
     "@codemirror/view": "^6.36.2",
+    "@fn-sphere/filter": "^0.7.1",
     "@mantine/core": "^7.15.3",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-select": "^2.1.4",
@@ -34,7 +36,8 @@
     "react-dom": "^19.0.0",
     "react-intersection-observer": "^9.14.1",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",
@@ -43,6 +46,7 @@
     "@types/react-dom": "^19.0.2",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.4"
   }
 }

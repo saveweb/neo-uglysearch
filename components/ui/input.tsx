@@ -21,7 +21,16 @@ const Input = React.forwardRef<
     if (inputRef.current) {
       inputRef.current.focus();
       const length = inputRef.current.value.length;
-      inputRef.current.setSelectionRange(length, length);
+      // HTMLInputElement: setSelectionRange() method
+      // The element must be of one of the following input types: password, search, tel, text, or url.
+      // Otherwise the browser throws an InvalidStateError exception.
+      if (
+        ["password", "search", "tel", "text", "url"].includes(
+          inputRef.current.type
+        )
+      ) {
+        inputRef.current.setSelectionRange(length, length);
+      }
     }
   }, []);
 
@@ -40,7 +49,7 @@ const Input = React.forwardRef<
         className
       )}
       ref={inputRef}
-      defaultValue={value}
+      value={value}
       {...inputProps}
       {...props}
     />

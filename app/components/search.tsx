@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import SearchResults from "./search-results";
 import debounce from "lodash.debounce";
 import SearchBox, { Sort } from "./search-box";
@@ -49,11 +48,13 @@ export default function Search() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!query.length) return
     const encodedQuery = encodeURIComponent(query);
     router.push(`/search?q=${encodedQuery}&sort=${sort}`, { scroll: false });
   };
 
   const handleInputChange = (s: string) => {
+    if (s === query) return;
     setQuery(s);
     debouncedUpdateURL(s);
   };
