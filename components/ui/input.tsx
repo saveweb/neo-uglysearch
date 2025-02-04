@@ -49,7 +49,7 @@ const Input = React.forwardRef<
         className
       )}
       ref={inputRef}
-      value={value}
+      defaultValue={value}
       {...inputProps}
       {...props}
     />
