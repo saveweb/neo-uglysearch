@@ -13,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Toggle } from "@/components/ui/toggle";
+import { Code } from "lucide-react";
 import ManualDialog from "./manual-dialog";
 import AdvancedFilterBuilder, { getCachedFilterRule } from "./filter-sphere";
 
@@ -35,7 +37,7 @@ export default function Search(props: Props) {
   const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(
     props.initAdvancedSearch
   );
-  const [isExpertMode, setIsExpertMode] = React.useState(
+  const [isQueryMode, setIsQueryMode] = React.useState(
     props.initAdvancedSearch && !getCachedFilterRule(props.query)
   );
   const [sort, setSort] = React.useState<Sort>(Sort.Relevance);
@@ -51,18 +53,20 @@ export default function Search(props: Props) {
         </div>
         {useAdvancedSearch && (
           <>
-            <label className="mx-2" htmlFor="expert-mode">
-              专家模式
-            </label>
-            <Switch
-              className="inline-block"
-              id="expert-mode"
-              checked={isExpertMode}
-              onCheckedChange={(prev) => setIsExpertMode(prev)}
-            />
+            <Toggle
+              aria-label="Toggle query mode"
+              id="query-mode"
+              size="sm"
+              defaultPressed={!isQueryMode}
+              variant="neutral"
+              onPressedChange={(pressed) => setIsQueryMode(!pressed)}
+            >
+              <Code strokeWidth={3.2} />
+              Query
+            </Toggle>
           </>
         )}
-        <label className="mx-2" htmlFor="use-advanced">
+        <label className="mx-2 ms-4" htmlFor="use-advanced">
           高级搜索
         </label>
         <Switch
@@ -110,7 +114,7 @@ export default function Search(props: Props) {
       </div>
 
       {useAdvancedSearch ? (
-        isExpertMode ? (
+        isQueryMode ? (
           <AdvancedSearchInput value={props.query} onChange={props.onChange} />
         ) : (
           <AdvancedFilterBuilder

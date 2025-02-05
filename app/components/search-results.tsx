@@ -18,6 +18,7 @@ import NotFoundAnimation from "./not-found-animation";
 import { Switch } from "@/components/ui/switch";
 import NoMoreAnimation from "./no-more-animation";
 import { Sort } from "./search-box";
+import { CalendarDays, PenIcon } from "lucide-react";
 
 async function getSearchResults(query: string, page: number, sort: Sort) {
   const baseUrl = "https://search-api.saveweb.org/api/search";
@@ -192,7 +193,7 @@ export default function SearchResults({
               <div className="flex items-center justify-end">
                 {hit.author && (
                   <div className="mr-2">
-                    作者：
+                    <PenIcon className="inline-block m-1" size={14} aria-label="作者" />
                     <span
                       dangerouslySetInnerHTML={{
                         __html: hit.author
@@ -204,7 +205,7 @@ export default function SearchResults({
                   </div>
                 )}
                 <div>
-                  日期：
+                  <CalendarDays className="inline-block m-1" size={14} aria-label="日期" />
                   <time dateTime={hit.date} suppressHydrationWarning>
                     {new Date(hit.date * 1000).toLocaleDateString()}
                   </time>
