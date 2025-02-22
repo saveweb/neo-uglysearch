@@ -99,7 +99,7 @@ const templatesSpec = {
       <div
         className={cn(
           "relative flex flex-col items-start rounded-base border-2 border-border px-3 py-2 gap-2 bg-opacity pt-8",
-          isRoot ? "mt-8" : "mt-6 mb-2"
+          isRoot ? "mt-8" : "mt-6"
         )}
         {...props}
       >
