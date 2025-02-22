@@ -5,6 +5,7 @@ const STORAGE_KEY = "filter-rule-cache";
 
 export const cacheFilterRule = (query: string, rule: FilterGroup) => {
   if (!("localStorage" in globalThis)) return;
+  if (!query) return;
 
   const obj = {
     key: query,
