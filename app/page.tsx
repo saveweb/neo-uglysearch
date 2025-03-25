@@ -17,7 +17,7 @@ import StateDisplay from "./components/state-display";
 const marqueeItems = [
   "全文搜索",
   "Save the Web Project",
-  "丑搜 v3",
+  "挖抓搜 v3",
   "独立博客",
   "neo-uglysearch",
   "模糊搜索",
@@ -51,7 +51,7 @@ export default function Home() {
             alt="NeoSearch"
             className="w-24 h-24 inline-block mr-2 absolute translate-x-32 font-bold"
           />
-          丑搜 v3
+          挖抓搜 v3
           <div className="ml-auto block md:hidden">
             <ManualDialog />
           </div>
