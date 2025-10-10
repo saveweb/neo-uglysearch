@@ -220,7 +220,6 @@ describe("FilterGroup Serialization", () => {
 
     const serialized = serializeFilterGroup(filter);
     const deserialized = deserializeFilterGroup(serialized);
-    console.log(serialized, deserialized)
     expect((deserialized.conditions[0] as any).args[0]).toBeInstanceOf(Date);
     expect((deserialized.conditions[0] as any).args[0].toISOString()).toBe(
       date.toISOString()
