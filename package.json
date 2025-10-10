@@ -16,7 +16,7 @@
   "dependencies": {
     "@codemirror/lang-sql": "^6.8.0",
     "@codemirror/view": "^6.36.2",
-    "@fn-sphere/filter": "^0.7.2",
+    "@fn-sphere/filter": "^1.0.0",
     "@mantine/core": "^7.16.2",
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-select": "^2.1.5",
@@ -38,7 +38,7 @@
     "react-intersection-observer": "^9.15.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",

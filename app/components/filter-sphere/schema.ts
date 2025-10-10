@@ -16,7 +16,10 @@ export const filterSchema = z.object({
 
 const notStartsWithFilter = defineTypedFn({
   name: "notStartsWith",
-  define: z.function().args(z.string(), z.coerce.string()).returns(z.boolean()),
+  define: z.function({
+    input: [z.string(), z.coerce.string()],
+    output: z.boolean(),
+  }),
   // Just a placeholder since we don't need filter data at frontend.
   implement: () => false,
 });

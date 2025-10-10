@@ -15,8 +15,8 @@ importers:
         specifier: ^6.36.2
         version: 6.36.2
       '@fn-sphere/filter':
-        specifier: ^0.7.2
-        version: 0.7.2(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(zod@3.24.1)
+        specifier: ^1.0.0
+        version: 1.0.0(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(zod@4.1.12)
       '@mantine/core':
         specifier: ^7.16.2
         version: 7.16.2(@mantine/hooks@7.15.2(react@19.0.0))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -81,8 +81,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17)
       zod:
-        specifier: ^3.24.1
-        version: 3.24.1
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@types/lodash.debounce':
         specifier: ^4.0.9
@@ -125,6 +125,9 @@ packages:
   '@codemirror/commands@6.8.0':
     resolution: {integrity: sha512-q8VPEFaEP4ikSlt6ZxjB3zW72+7osfAYW9i8Zu943uqbKuz6utc1+F170hyLUCUltXORjQXRyYQNfkckzA/bPQ==}
 
+  '@codemirror/commands@6.9.0':
+    resolution: {integrity: sha512-454TVgjhO6cMufsyyGN70rGIfJxJEjcqjBG2x2Y03Y/+Fm99d3O/Kv1QDYWuG6hvxsgmjXmBuATikIIYvERX+w==}
+
   '@codemirror/lang-sql@6.8.0':
     resolution: {integrity: sha512-aGLmY4OwGqN3TdSx3h6QeA1NrvaYtF7kkoWR/+W7/JzB0gQtJ+VJxewlnE3+VImhA4WVlhmkJr109PefOOhjLg==}
 
@@ -146,8 +149,8 @@ packages:
   '@codemirror/view@6.36.2':
     resolution: {integrity: sha512-DZ6ONbs8qdJK0fdN7AB82CgI6tYXf4HWk1wSVa0+9bhVznCuuvhQtX8bFBoy3dv8rZSQqUd8GvhVAcielcidrA==}
 
-  '@codemirror/view@6.36.4':
-    resolution: {integrity: sha512-ZQ0V5ovw/miKEXTvjgzRyjnrk9TwriUB1k4R5p7uNnHR9Hus+D1SXHGdJshijEzPFjU25xea/7nhIeSqYFKdbA==}
+  '@codemirror/view@6.38.5':
+    resolution: {integrity: sha512-SFVsNAgsAoou+BjRewMqN+m9jaztB9wCWN9RSRgePqUbq8UVlvJfku5zB2KVhLPgH/h0RLk38tvd4tGeAhygnw==}
 
   '@emnapi/runtime@1.3.1':
     resolution: {integrity: sha512-kEBmG8KyqtxJZv+ygbEim+KCGtIq1fC22Ms3S4ziXmYKm8uyoLX0MHONVKwp+9opg390VaKRNt4a7A9NwmpNhw==}
@@ -323,18 +326,18 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@fn-sphere/core@0.6.0':
-    resolution: {integrity: sha512-3XvDjG5Qw54qFrzMtL4znL/S7ZhWN3jQJEJ0sqZnEe/xjSc0+6PCxdCULyXgjy/LxEIMjYbSorE26EeQVLcqAw==}
+  '@fn-sphere/core@1.0.0':
+    resolution: {integrity: sha512-2vYf+JsLgEMmNezj7m0/mJYjgd9GhwilCFwIjVyADX9pvXPON223NfICu90hoXo2+/1pCKUkQtDq+ICJxQVZCQ==}
     peerDependencies:
-      zod: ^3.0.0
+      zod: ^4.1.0
 
-  '@fn-sphere/filter@0.7.2':
-    resolution: {integrity: sha512-VAAhdnJ2WA9vFESkalhRu8dieNvBCbpg8SMDG3qPzKPvRzx/2bSUDEEiGiUVwRtFU3mdM+gt2WDlgkjrh/4IXg==}
+  '@fn-sphere/filter@1.0.0':
+    resolution: {integrity: sha512-nmmcew5laBaVwLN4iNOzxMc3Bprpj9O+TNGy+eHyHatKJeb8iZN+H36pTSMn2LHp6b/GBe6HeVagsMExfq8DSA==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
       react: ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-      zod: ^3.0.0
+      zod: ^4.1.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -1867,14 +1870,14 @@ packages:
     engines: {node: '>= 14'}
     hasBin: true
 
-  zod-compare@0.3.1:
-    resolution: {integrity: sha512-e05e3zgEgDAGGCDSW3Td5aQXNBCEm1MvCyWgRHHLUT3YWAKI2F7aZ4DPXCXDFkCLCvbJbnY2KLxlXssnlOA/Tg==}
+  zod-compare@2.0.0:
+    resolution: {integrity: sha512-LGqcPk9ZiU4q355YI2LEPoFVD2UJSX5zmW4OfTdO/MBmRCIY68JxAKqyUgeLJ+37gS4jWODqJjoo9UCuWuW1rQ==}
     engines: {node: '>=20'}
     peerDependencies:
-      zod: ^3.22.4
+      zod: ^3.25.0 || ^4.0.0
 
-  zod@3.24.1:
-    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
 snapshots:
 
@@ -1898,6 +1901,13 @@ snapshots:
       '@codemirror/view': 6.36.2
       '@lezer/common': 1.2.3
 
+  '@codemirror/commands@6.9.0':
+    dependencies:
+      '@codemirror/language': 6.10.8
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.5
+      '@lezer/common': 1.2.3
+
   '@codemirror/lang-sql@6.8.0':
     dependencies:
       '@codemirror/autocomplete': 6.18.4
@@ -1919,13 +1929,13 @@ snapshots:
   '@codemirror/lint@6.8.4':
     dependencies:
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.36.4
+      '@codemirror/view': 6.38.5
       crelt: 1.0.6
 
   '@codemirror/search@6.5.8':
     dependencies:
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.36.4
+      '@codemirror/view': 6.38.5
       crelt: 1.0.6
 
   '@codemirror/state@6.5.2':
@@ -1936,7 +1946,7 @@ snapshots:
     dependencies:
       '@codemirror/language': 6.10.8
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.36.4
+      '@codemirror/view': 6.38.5
       '@lezer/highlight': 1.2.1
 
   '@codemirror/view@6.36.2':
@@ -1945,9 +1955,10 @@ snapshots:
       style-mod: 4.1.2
       w3c-keyname: 2.2.8
 
-  '@codemirror/view@6.36.4':
+  '@codemirror/view@6.38.5':
     dependencies:
       '@codemirror/state': 6.5.2
+      crelt: 1.0.6
       style-mod: 4.1.2
       w3c-keyname: 2.2.8
 
@@ -2056,17 +2067,17 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@fn-sphere/core@0.6.0(zod@3.24.1)':
+  '@fn-sphere/core@1.0.0(zod@4.1.12)':
     dependencies:
-      zod: 3.24.1
-      zod-compare: 0.3.1(zod@3.24.1)
+      zod: 4.1.12
+      zod-compare: 2.0.0(zod@4.1.12)
 
-  '@fn-sphere/filter@0.7.2(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(zod@3.24.1)':
+  '@fn-sphere/filter@1.0.0(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(zod@4.1.12)':
     dependencies:
-      '@fn-sphere/core': 0.6.0(zod@3.24.1)
+      '@fn-sphere/core': 1.0.0(zod@4.1.12)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      zod: 3.24.1
+      zod: 4.1.12
     optionalDependencies:
       '@types/react': 19.0.8
 
@@ -2747,12 +2758,12 @@ snapshots:
   codemirror@6.0.1:
     dependencies:
       '@codemirror/autocomplete': 6.18.4
-      '@codemirror/commands': 6.8.0
+      '@codemirror/commands': 6.9.0
       '@codemirror/language': 6.10.8
       '@codemirror/lint': 6.8.4
       '@codemirror/search': 6.5.8
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.36.4
+      '@codemirror/view': 6.38.5
 
   color-convert@2.0.1:
     dependencies:
@@ -3481,8 +3492,8 @@ snapshots:
 
   yaml@2.7.0: {}
 
-  zod-compare@0.3.1(zod@3.24.1):
+  zod-compare@2.0.0(zod@4.1.12):
     dependencies:
-      zod: 3.24.1
+      zod: 4.1.12
 
-  zod@3.24.1: {}
+  zod@4.1.12: {}
