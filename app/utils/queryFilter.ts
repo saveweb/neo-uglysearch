@@ -3,6 +3,16 @@
  */
 
 /**
+ * Checks if a query already contains a specific date filter
+ * Uses more specific matching to avoid false positives
+ */
+function hasDateFilter(query: string, dateFilter: string): boolean {
+  // Match the filter when it's wrapped in parentheses or at the end
+  const filterPattern = new RegExp(`\\(${dateFilter.replace(/[()]/g, '\\$&')}\\)`, 'i');
+  return filterPattern.test(query);
+}
+
+/**
  * Combines a search query with a date filter
  * @param query - The original search query
  * @param dateFilter - The date filter expression to add
@@ -13,7 +23,7 @@ export function addDateFilterToQuery(query: string, dateFilter: string): string 
   const filterExpression = `(${dateFilter})`;
   
   // Check if the query already contains the date filter
-  if (trimmedQuery.includes(dateFilter)) {
+  if (hasDateFilter(trimmedQuery, dateFilter)) {
     return trimmedQuery;
   }
   

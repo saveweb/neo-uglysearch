@@ -17,7 +17,6 @@ import { Toggle } from "@/components/ui/toggle";
 import { Code, Clock } from "lucide-react";
 import ManualDialog from "./manual-dialog";
 import AdvancedFilterBuilder, { getCachedFilterRule } from "./filter-sphere";
-import { Button } from "@/components/ui/button";
 
 export interface Props {
   query: string;
