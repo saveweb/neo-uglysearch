@@ -7,8 +7,10 @@
  * Uses more specific matching to avoid false positives
  */
 function hasDateFilter(query: string, dateFilter: string): boolean {
-  // Match the filter when it's wrapped in parentheses or at the end
-  const filterPattern = new RegExp(`\\(${dateFilter.replace(/[()]/g, '\\$&')}\\)`, 'i');
+  // Escape all special regex characters including backslash
+  const escaped = dateFilter.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&');
+  // Match the filter when it's wrapped in parentheses
+  const filterPattern = new RegExp(`\\(${escaped}\\)`, 'i');
   return filterPattern.test(query);
 }
 
