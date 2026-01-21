@@ -24,6 +24,7 @@ export interface Props {
   initAdvancedSearch: boolean;
   onChange: (s: string) => void;
   onSortChange: (sort: Sort) => void;
+  onHumanEraChange?: (enabled: boolean) => void;
 }
 
 export enum Sort {
@@ -34,7 +35,7 @@ export enum Sort {
   IdAsc = "id:asc",
 }
 
-const PRE_2023_DATE_FILTER = "date < sec(2023-01-01)";
+export const PRE_2023_DATE_FILTER = "date < sec(2023-01-01)";
 
 export default function Search(props: Props) {
   const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(
@@ -44,44 +45,19 @@ export default function Search(props: Props) {
     props.initAdvancedSearch && !getCachedFilterRule(props.query)
   );
   const [sort, setSort] = React.useState<Sort>(Sort.Relevance);
+  const [humanEraEnabled, setHumanEraEnabled] = React.useState(false);
+  
   useEffect(() => {
     props.onSortChange(sort);
   }, [sort]);
 
-  const handlePre2023Search = () => {
-    const currentQuery = props.query.trim();
-    const dateFilter = `(${PRE_2023_DATE_FILTER})`;
-    
-    // Check if the query already contains the pre-2023 date filter
-    if (currentQuery.includes(PRE_2023_DATE_FILTER)) {
-      // Already has the filter, no need to add again
-      return;
+  useEffect(() => {
+    if (props.onHumanEraChange) {
+      props.onHumanEraChange(humanEraEnabled);
     }
-    
-    // Check if current query already has a filter (ends with parenthesis)
-    if (currentQuery.endsWith(")")) {
-      // Extract simple query and existing filter
-      const firstParen = currentQuery.indexOf("(");
-      if (firstParen !== -1) {
-        const simpleQuery = currentQuery.substring(0, firstParen).trim();
-        const existingFilter = currentQuery.substring(firstParen);
-        // Combine filters with AND
-        const combinedFilter = `(${existingFilter.slice(1, -1)} AND ${PRE_2023_DATE_FILTER})`;
-        const newQuery = simpleQuery ? `${simpleQuery} ${combinedFilter}` : combinedFilter;
-        props.onChange(newQuery);
-      } else {
-        // Should not happen, but fallback
-        props.onChange(`${currentQuery} ${dateFilter}`);
-      }
-    } else {
-      // Simple query or empty, append filter
-      const newQuery = currentQuery ? `${currentQuery} ${dateFilter}` : dateFilter;
-      props.onChange(newQuery);
-    }
-    
-    setUseAdvancedSearch(true);
-    setIsQueryMode(true);
-  };
+  }, [humanEraEnabled]);
+
+
 
   return (
     <div className="w-full font-semibold">
@@ -89,16 +65,17 @@ export default function Search(props: Props) {
         <div className="mr-auto hidden md:block">
           <ManualDialog />
         </div>
-        <Button
-          variant="reverse"
-          size="sm"
-          onClick={handlePre2023Search}
-          className="mr-2"
-          title="搜索 2023 年以前的内容（人类时代）"
-        >
+        <label className="mr-2 flex items-center gap-2" htmlFor="human-era">
           <Clock className="h-4 w-4" />
-          人类时代
-        </Button>
+          <span className="text-sm">人类时代</span>
+        </label>
+        <Switch
+          className="inline-block mr-2"
+          id="human-era"
+          checked={humanEraEnabled}
+          onCheckedChange={setHumanEraEnabled}
+          title="搜索 2023 年以前的内容（人类时代）"
+        />
         {useAdvancedSearch && (
           <>
             <Toggle

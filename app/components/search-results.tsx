@@ -20,11 +20,42 @@ import NoMoreAnimation from "./no-more-animation";
 import { Sort } from "./search-box";
 import { CalendarDays, PenIcon } from "lucide-react";
 
-async function getSearchResults(query: string, page: number, sort: Sort) {
+const PRE_2023_DATE_FILTER = "date < sec(2023-01-01)";
+
+async function getSearchResults(query: string, page: number, sort: Sort, humanEraEnabled: boolean = false) {
   const baseUrl = "https://search-api.saveweb.org/api/search";
   const url = new URL(baseUrl);
+  
+  // Apply human era date filter if enabled
+  let finalQuery = query.trim();
+  if (humanEraEnabled) {
+    const dateFilter = `(${PRE_2023_DATE_FILTER})`;
+    
+    // Check if the query already contains the pre-2023 date filter
+    if (!finalQuery.includes(PRE_2023_DATE_FILTER)) {
+      // Check if current query already has a filter (ends with parenthesis)
+      if (finalQuery.endsWith(")")) {
+        // Extract simple query and existing filter
+        const firstParen = finalQuery.indexOf("(");
+        if (firstParen !== -1) {
+          const simpleQuery = finalQuery.substring(0, firstParen).trim();
+          const existingFilter = finalQuery.substring(firstParen);
+          // Combine filters with AND
+          const combinedFilter = `(${existingFilter.slice(1, -1)} AND ${PRE_2023_DATE_FILTER})`;
+          finalQuery = simpleQuery ? `${simpleQuery} ${combinedFilter}` : combinedFilter;
+        } else {
+          // Should not happen, but fallback
+          finalQuery = `${finalQuery} ${dateFilter}`;
+        }
+      } else {
+        // Simple query or empty, append filter
+        finalQuery = finalQuery ? `${finalQuery} ${dateFilter}` : dateFilter;
+      }
+    }
+  }
+  
   const params = new URLSearchParams({
-    q: query.trim(),
+    q: finalQuery,
     f: "false",
     p: page.toString(),
     h: "true",
@@ -54,10 +85,12 @@ export default function SearchResults({
   initialQuery,
   initialPage,
   sort,
+  humanEraEnabled = false,
 }: {
   initialQuery: string;
   initialPage: number;
   sort: Sort;
+  humanEraEnabled?: boolean;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const [page, setPage] = useState(initialPage);
@@ -100,7 +133,8 @@ export default function SearchResults({
       const data = await getSearchResults(
         query,
         reset ? initialPage : page,
-        sort
+        sort,
+        humanEraEnabled
       );
       setTotalHits(totalHits + (data?.hits?.length ?? 0));
       if (data.error) {
