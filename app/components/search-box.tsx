@@ -34,6 +34,8 @@ export enum Sort {
   IdAsc = "id:asc",
 }
 
+const PRE_2023_DATE_FILTER = "date < sec(2023-01-01)";
+
 export default function Search(props: Props) {
   const [useAdvancedSearch, setUseAdvancedSearch] = React.useState(
     props.initAdvancedSearch
@@ -47,9 +49,14 @@ export default function Search(props: Props) {
   }, [sort]);
 
   const handlePre2023Search = () => {
-    // Apply date filter for content before 2023-01-01
     const currentQuery = props.query.trim();
-    const dateFilter = "(date < sec(2023-01-01))";
+    const dateFilter = `(${PRE_2023_DATE_FILTER})`;
+    
+    // Check if the query already contains the pre-2023 date filter
+    if (currentQuery.includes(PRE_2023_DATE_FILTER)) {
+      // Already has the filter, no need to add again
+      return;
+    }
     
     // Check if current query already has a filter (ends with parenthesis)
     if (currentQuery.endsWith(")")) {
@@ -59,7 +66,7 @@ export default function Search(props: Props) {
         const simpleQuery = currentQuery.substring(0, firstParen).trim();
         const existingFilter = currentQuery.substring(firstParen);
         // Combine filters with AND
-        const combinedFilter = `(${existingFilter.slice(1, -1)} AND date < sec(2023-01-01))`;
+        const combinedFilter = `(${existingFilter.slice(1, -1)} AND ${PRE_2023_DATE_FILTER})`;
         const newQuery = simpleQuery ? `${simpleQuery} ${combinedFilter}` : combinedFilter;
         props.onChange(newQuery);
       } else {
