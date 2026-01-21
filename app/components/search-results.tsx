@@ -18,13 +18,22 @@ import NotFoundAnimation from "./not-found-animation";
 import { Switch } from "@/components/ui/switch";
 import NoMoreAnimation from "./no-more-animation";
 import { Sort } from "./search-box";
+import { PRE_2023_DATE_FILTER } from "./search-box";
 import { CalendarDays, PenIcon } from "lucide-react";
+import { addDateFilterToQuery } from "../utils/queryFilter";
 
-async function getSearchResults(query: string, page: number, sort: Sort) {
+async function getSearchResults(query: string, page: number, sort: Sort, humanEraEnabled: boolean = false) {
   const baseUrl = "https://search-api.saveweb.org/api/search";
   const url = new URL(baseUrl);
+  
+  // Apply human era date filter if enabled
+  let finalQuery = query.trim();
+  if (humanEraEnabled) {
+    finalQuery = addDateFilterToQuery(finalQuery, PRE_2023_DATE_FILTER);
+  }
+  
   const params = new URLSearchParams({
-    q: query.trim(),
+    q: finalQuery,
     f: "false",
     p: page.toString(),
     h: "true",
@@ -54,10 +63,12 @@ export default function SearchResults({
   initialQuery,
   initialPage,
   sort,
+  humanEraEnabled = false,
 }: {
   initialQuery: string;
   initialPage: number;
   sort: Sort;
+  humanEraEnabled?: boolean;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const [page, setPage] = useState(initialPage);
@@ -100,7 +111,8 @@ export default function SearchResults({
       const data = await getSearchResults(
         query,
         reset ? initialPage : page,
-        sort
+        sort,
+        humanEraEnabled
       );
       setTotalHits(totalHits + (data?.hits?.length ?? 0));
       if (data.error) {

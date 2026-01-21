@@ -21,6 +21,7 @@ export default function Search() {
   let initSort = decodeURIComponent(searchParams.get("sort") || "relevance");
   if (!initSort) initSort = "relevance";
   let [sort, setSort] = useState<Sort>(initSort as Sort);
+  const [humanEraEnabled, setHumanEraEnabled] = useState(false);
 
   const [query, setQuery] = useState(initialQuery);
 
@@ -80,15 +81,17 @@ export default function Search() {
           initAdvancedSearch={isAdvancedSearch(query)}
           onChange={handleInputChange}
           onSortChange={setSort}
+          onHumanEraChange={setHumanEraEnabled}
         />
       </form>
 
       {query && (
         <SearchResults
-          key={`${query}-${sort}`} // 添加 key 属性确保查询变化时重新渲染
+          key={`${query}-${sort}-${humanEraEnabled}`} // 添加 key 属性确保查询变化时重新渲染
           initialQuery={query} // 改用 query 替代 initialQuery
           initialPage={0}
           sort={sort}
+          humanEraEnabled={humanEraEnabled}
         />
       )}
     </div>
