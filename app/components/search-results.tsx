@@ -18,9 +18,9 @@ import NotFoundAnimation from "./not-found-animation";
 import { Switch } from "@/components/ui/switch";
 import NoMoreAnimation from "./no-more-animation";
 import { Sort } from "./search-box";
+import { PRE_2023_DATE_FILTER } from "./search-box";
 import { CalendarDays, PenIcon } from "lucide-react";
-
-const PRE_2023_DATE_FILTER = "date < sec(2023-01-01)";
+import { addDateFilterToQuery } from "../utils/queryFilter";
 
 async function getSearchResults(query: string, page: number, sort: Sort, humanEraEnabled: boolean = false) {
   const baseUrl = "https://search-api.saveweb.org/api/search";
@@ -29,29 +29,7 @@ async function getSearchResults(query: string, page: number, sort: Sort, humanEr
   // Apply human era date filter if enabled
   let finalQuery = query.trim();
   if (humanEraEnabled) {
-    const dateFilter = `(${PRE_2023_DATE_FILTER})`;
-    
-    // Check if the query already contains the pre-2023 date filter
-    if (!finalQuery.includes(PRE_2023_DATE_FILTER)) {
-      // Check if current query already has a filter (ends with parenthesis)
-      if (finalQuery.endsWith(")")) {
-        // Extract simple query and existing filter
-        const firstParen = finalQuery.indexOf("(");
-        if (firstParen !== -1) {
-          const simpleQuery = finalQuery.substring(0, firstParen).trim();
-          const existingFilter = finalQuery.substring(firstParen);
-          // Combine filters with AND
-          const combinedFilter = `(${existingFilter.slice(1, -1)} AND ${PRE_2023_DATE_FILTER})`;
-          finalQuery = simpleQuery ? `${simpleQuery} ${combinedFilter}` : combinedFilter;
-        } else {
-          // Should not happen, but fallback
-          finalQuery = `${finalQuery} ${dateFilter}`;
-        }
-      } else {
-        // Simple query or empty, append filter
-        finalQuery = finalQuery ? `${finalQuery} ${dateFilter}` : dateFilter;
-      }
-    }
+    finalQuery = addDateFilterToQuery(finalQuery, PRE_2023_DATE_FILTER);
   }
   
   const params = new URLSearchParams({
