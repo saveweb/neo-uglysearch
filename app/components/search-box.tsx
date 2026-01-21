@@ -14,9 +14,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
-import { Code } from "lucide-react";
+import { Code, Clock } from "lucide-react";
 import ManualDialog from "./manual-dialog";
 import AdvancedFilterBuilder, { getCachedFilterRule } from "./filter-sphere";
+import { Button } from "@/components/ui/button";
 
 export interface Props {
   query: string;
@@ -45,12 +46,52 @@ export default function Search(props: Props) {
     props.onSortChange(sort);
   }, [sort]);
 
+  const handlePre2023Search = () => {
+    // Apply date filter for content before 2023-01-01
+    const currentQuery = props.query.trim();
+    const dateFilter = "(date < sec(2023-01-01))";
+    
+    // Check if current query already has a filter (ends with parenthesis)
+    if (currentQuery.endsWith(")")) {
+      // Extract simple query and existing filter
+      const firstParen = currentQuery.indexOf("(");
+      if (firstParen !== -1) {
+        const simpleQuery = currentQuery.substring(0, firstParen).trim();
+        const existingFilter = currentQuery.substring(firstParen);
+        // Combine filters with AND
+        const combinedFilter = `(${existingFilter.slice(1, -1)} AND date < sec(2023-01-01))`;
+        const newQuery = simpleQuery ? `${simpleQuery} ${combinedFilter}` : combinedFilter;
+        props.onChange(newQuery);
+      } else {
+        // Should not happen, but fallback
+        props.onChange(`${currentQuery} ${dateFilter}`);
+      }
+    } else {
+      // Simple query or empty, append filter
+      const newQuery = currentQuery ? `${currentQuery} ${dateFilter}` : dateFilter;
+      props.onChange(newQuery);
+    }
+    
+    setUseAdvancedSearch(true);
+    setIsQueryMode(true);
+  };
+
   return (
     <div className="w-full font-semibold">
       <div className="flex flex-row items-center justify-end mb-2">
         <div className="mr-auto hidden md:block">
           <ManualDialog />
         </div>
+        <Button
+          variant="reverse"
+          size="sm"
+          onClick={handlePre2023Search}
+          className="mr-2"
+          title="搜索 2023 年以前的内容（人类时代）"
+        >
+          <Clock className="h-4 w-4" />
+          人类时代
+        </Button>
         {useAdvancedSearch && (
           <>
             <Toggle
