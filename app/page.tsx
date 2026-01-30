@@ -45,21 +45,17 @@ export default function Home() {
         <Marquee items={marqueeItems} reverse />
       </div>
       <div className="z-10 w-full items-center justify-between px-4 sm:px-8 md:px-16 lg:px-24">
-        <div className="mb-4 text-center py-8">
-          <div className="flex items-center justify-center gap-2 md:gap-4">
-            <img
-              src="/neosearch.svg"
-              alt="NeoSearch"
-              className="w-16 h-16 md:w-24 md:h-24"
-            />
-            <h1 className="font-black text-3xl md:text-4xl font-heading text-text shadow-shadow">
-              丑搜 v3
-            </h1>
-          </div>
-          <div className="mt-4 block md:hidden">
+        <h1 className="mb-4 font-black text-4xl font-heading text-text shadow-shadow text-center py-8">
+          <img
+            src="/neosearch.svg"
+            alt="NeoSearch"
+            className="w-24 h-24 inline-block mr-2 absolute translate-x-32 font-bold"
+          />
+          丑搜 v3
+          <div className="ml-auto block md:hidden">
             <ManualDialog />
           </div>
-        </div>
+        </h1>
         <section className="max-w-4xl w-full m-auto">
           <Suspense fallback={<LoadingSpinner />}>
             <Search />
