@@ -70,7 +70,7 @@ export default function Home() {
         <StateDisplay />
         <br />
         [AD] 正在进行中的项目：
-        <a href="https://github.com/saveweb/review-2024">2024 年年终总结收集</a>
+        <a href="https://github.com/saveweb/review-2025">2025 年年终总结收集</a>
         <br />
         neo-uglysearch@0.4.5 by <a href="https://saveweb.org">Save the Web Project</a> © 2025.
         <br />
