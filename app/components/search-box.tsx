@@ -60,80 +60,82 @@ export default function Search(props: Props) {
 
   return (
     <div className="w-full font-semibold">
-      <div className="flex flex-row items-center justify-end mb-2">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 mb-2">
         <div className="mr-auto hidden md:block">
           <ManualDialog />
         </div>
-        <label className="mr-2 flex items-center gap-2" htmlFor="human-era">
-          <Clock className="h-4 w-4" />
-          <span className="text-sm">人类时代</span>
-        </label>
-        <Switch
-          className="inline-block mr-2"
-          id="human-era"
-          checked={humanEraEnabled}
-          onCheckedChange={setHumanEraEnabled}
-          title="搜索 2023 年以前的内容（人类时代）"
-        />
-        {useAdvancedSearch && (
-          <>
-            <Toggle
-              aria-label="Toggle query mode"
-              id="query-mode"
-              size="sm"
-              defaultPressed={!isQueryMode}
-              variant="neutral"
-              onPressedChange={(pressed) => setIsQueryMode(!pressed)}
-            >
-              <Code strokeWidth={3.2} />
-              Query
-            </Toggle>
-          </>
-        )}
-        <label className="mx-2 ms-4" htmlFor="use-advanced">
-          高级搜索
-        </label>
-        <Switch
-          className="inline-block"
-          id="use-advanced"
-          checked={useAdvancedSearch}
-          onCheckedChange={(prev) => setUseAdvancedSearch(prev)}
-        />
-        <div className="flex flex-row items-center">
-          <label className="mx-2" htmlFor="">
-            排序方式
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <label className="flex items-center gap-1 md:gap-2 text-xs md:text-sm" htmlFor="human-era">
+            <Clock className="h-3 w-3 md:h-4 md:w-4" />
+            <span>人类时代</span>
           </label>
-          <Select
-            value={sort}
-            onValueChange={(value) => setSort(value as Sort)}
-          >
-            <SelectTrigger className="w-[120px] md:w-[160px]">
-              <SelectValue placeholder="默认相关性" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="relevance">相关性</SelectItem>
-                <SelectLabel
-                  style={{
-                    marginInlineStart: "-3ch",
-                  }}
-                >
-                  文章元数据
-                </SelectLabel>
-                <SelectItem value="date:desc">最新发布</SelectItem>
-                <SelectItem value="date:asc">最早发布</SelectItem>
-                <SelectLabel
-                  style={{
-                    marginInlineStart: "-3ch",
-                  }}
-                >
-                  收录时间
-                </SelectLabel>
-                <SelectItem value="id:desc">最新收录</SelectItem>
-                <SelectItem value="id:asc">最早收录</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Switch
+            className="inline-block"
+            id="human-era"
+            checked={humanEraEnabled}
+            onCheckedChange={setHumanEraEnabled}
+            title="搜索 2023 年以前的内容（人类时代）"
+          />
+          {useAdvancedSearch && (
+            <>
+              <Toggle
+                aria-label="Toggle query mode"
+                id="query-mode"
+                size="sm"
+                defaultPressed={!isQueryMode}
+                variant="neutral"
+                onPressedChange={(pressed) => setIsQueryMode(!pressed)}
+              >
+                <Code strokeWidth={3.2} />
+                Query
+              </Toggle>
+            </>
+          )}
+          <label className="text-xs md:text-sm ml-2" htmlFor="use-advanced">
+            高级搜索
+          </label>
+          <Switch
+            className="inline-block"
+            id="use-advanced"
+            checked={useAdvancedSearch}
+            onCheckedChange={(prev) => setUseAdvancedSearch(prev)}
+          />
+          <div className="flex flex-row items-center ml-2">
+            <label className="text-xs md:text-sm mr-2" htmlFor="">
+              排序方式
+            </label>
+            <Select
+              value={sort}
+              onValueChange={(value) => setSort(value as Sort)}
+            >
+              <SelectTrigger className="w-[100px] md:w-[160px]">
+                <SelectValue placeholder="默认相关性" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="relevance">相关性</SelectItem>
+                  <SelectLabel
+                    style={{
+                      marginInlineStart: "-3ch",
+                    }}
+                  >
+                    文章元数据
+                  </SelectLabel>
+                  <SelectItem value="date:desc">最新发布</SelectItem>
+                  <SelectItem value="date:asc">最早发布</SelectItem>
+                  <SelectLabel
+                    style={{
+                      marginInlineStart: "-3ch",
+                    }}
+                  >
+                    收录时间
+                  </SelectLabel>
+                  <SelectItem value="id:desc">最新收录</SelectItem>
+                  <SelectItem value="id:asc">最早收录</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 

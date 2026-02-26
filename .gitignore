@@ -42,3 +42,4 @@ next-env.d.ts
 
 .vercel
 package-lock.json
+.next
